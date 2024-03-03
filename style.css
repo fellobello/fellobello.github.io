@@ -1,0 +1,68 @@
+/* style.css */
+:root {
+    /* Base colors */
+    --dark-background: #2a2d34; /* A deep, dark gray for the background */
+    --light-text: #e3f6f5; /* A bright, crisp white for text */
+    --accent-color: #87e6e6; /* A soft, light teal for accents */
+    --highlight-color: #ef7b45; /* A vibrant orange for highlights and links */
+    --secondary-text: #a7bbc7; /* A muted blue for secondary text */
+    --border-color: #3f4045; /* A slightly lighter gray for borders and separators */
+
+    /* Typography */
+    --heading-font: 'Courier New', Courier, monospace; /* A fun, quirky choice for headings */
+    --body-font: 'Arial', sans-serif; /* A clean, readable font for body text */
+}
+
+body {
+    background-color: var(--dark-background);
+    color: var(--light-text);
+    font-family: var(--body-font);
+    margin: 0;
+    padding: 20px;
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none; /* Removes underline */
+    transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+a::after {
+    content: " 🔗"; /* Adds a link icon before link text */
+}
+
+a:hover {
+    color: var(--highlight-color);
+}
+
+h1, h2, h3 {
+    font-family: var(--heading-font);
+    color: var(--light-text);
+}
+
+ul {
+    list-style: none; /* Removes bullet points */
+    padding-left: 0; /* Aligns list to the left */
+}
+
+li {
+    margin-bottom: 15px; /* Space between list items */
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.project-description {
+    background-color: var(--border-color);
+    color: var(--light-text);
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+}

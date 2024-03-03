@@ -3,107 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Projects</title>
   </head>
   <body>
-    <ul>
-      <li>
-        <a href="projectFiles/hexConway/hexConway.html">Cellular Automata</a>
-        <div>
-          <p>
-            This code implements a hexagonal variant of Conway's Game of Life, a
-            cellular automaton, where each cell on a grid can either be alive or
-            dead, and its state in the next generation depends on the states of
-            its neighbors. I designed it to run in a web environment using
-            p5.js, a JavaScript library that simplifies graphics and animations.
-          </p>
-
-          <p>
-            To accommodate the hexagonal grid, I calculated the positions and
-            drew hexagons instead of squares for each cell. The grid is
-            initialized with cells randomly set to alive or dead, and the
-            evolution of these cells follows specific rules inspired by the
-            original Game of Life, with some custom rules for birth and survival
-            thresholds. Specifically, a cell is "born" if it has exactly 2
-            neighbors, and it survives to the next generation if it has between
-            3 and 6 neighbors.
-          </p>
-
-          <p>
-            I introduced a fading effect for dead cells to visually represent
-            how long they have been dead, enhancing the visualization with a
-            dynamic color scheme. Alive cells are bright yellow, and dead cells
-            gradually transition from orange to green and finally to blue over a
-            specified duration (<code>fadeDuration</code>). This fading is
-            calculated using the <code>lerpColor</code> function, interpolating
-            between colors based on how long the cell has been dead.
-          </p>
-
-          <p>
-            The <code>setup</code> function initializes the canvas, calculates
-            column and row sizes based on the screen dimensions, and creates the
-            grid. The <code>draw</code> function iterates over each cell to
-            display the grid and updates the states of the cells based on the
-            Game of Life rules in the <code>nextGeneration</code> function. It
-            also adjusts the frame rate based on a slider input, allowing for
-            the dynamic control of the simulation's speed.
-          </p>
-
-          <p>
-            For the hexagonal grid logic, I took into account the staggered
-            layout where every other column is offset, affecting how neighbors
-            are calculated. The <code>getNeighbors</code> function addresses
-            this by adjusting the neighbor positions based on whether the
-            current cell is in an odd or even column, ensuring accurate neighbor
-            detection for the hexagonal grid.
-          </p>
-
-          <p>
-            In summary, I've extended the classic Game of Life into a visually
-            appealing hexagonal grid system, incorporating a fading effect for a
-            more dynamic and interesting visualization. This project combines
-            mathematical concepts with computer science principles, presenting a
-            complex system in a simple and engaging way.
-          </p>
-        </div>
-      </li>
-      <li>
+    <h1>My Projects</h1>
+    <section class="project">
+      <h2>
+        <a href="projectFiles/hexConway/hexConway.html"
+          >Cellular Automata: Hexagonal Conway's Game of Life</a
+        >
+      </h2>
+      <div class="project-description">
+        <p>
+          <strong>Overview:</strong> This variant of Conway's Game of Life
+          explores how altering the traditional square grid to a hexagonal one
+          affects emergent behaviors. Utilizing p5.js for graphics, this project
+          demonstrates the flexibility and complexity of cellular automata.
+        </p>
+        <p>
+          <strong>Successes and Discoveries:</strong> Incorporating a hexagonal
+          grid introduced unique challenges but also led to the discovery of
+          stable organisms with varying periods (2, 3, 4, and 5). This
+          adjustment only required a minor change to neighbor calculation,
+          illustrating the robustness of Conway's rules.
+        </p>
+        <p>
+          <strong>Challenges:</strong> Adapting Conway's Game of Life to a
+          hexagonal grid tested my problem-solving skills, particularly in
+          accurately calculating neighbors based on cell position (even or odd
+          columns).
+        </p>
+      </div>
+    </section>
+    <section class="project">
+      <h2>
         <a href="projectFiles/pathFinder/pathFinder.html">Greedy Path Finder</a>
-        <div>
-          <p>
-            This code implements a pathfinding algorithm on a grid where cells
-            can be obstacles or open paths. The setup initializes a grid on a
-            canvas, using Perlin noise to randomly place obstacles, creating a
-            start and a goal cell on navigable paths.
-          </p>
-
-          <p>
-            I used a simple pathfinding algorithm that starts from the 'start
-            cell', explores neighbors avoiding obstacles and already visited
-            cells, and uses the Manhattan distance as a heuristic to guide its
-            search towards the 'goal cell'. The algorithm is efficient,
-            prioritizing cells that move it closer to the goal.
-          </p>
-
-          <p>
-            The 'calculatePath' function embodies the pathfinding logic, while
-            'animatePath' visualizes the journey from start to goal. This
-            visualization helps in understanding the algorithm's decisions in
-            real-time. I designed the code to be modular, with functions focused
-            on specific tasks like setting up the grid, coloring cells based on
-            their state, and the path calculation and animation processes. This
-            structure makes the code easy to adjust and understand.
-          </p>
-
-          <p>
-            The purpose of this project is to demonstrate the pathfinding
-            algorithm's ability to navigate through a complex grid, highlighting
-            its efficiency and the effectiveness of using a heuristic in
-            pathfinding problems.
-          </p>
-        </div>
-      </li>
-      <!-- Add more projects as needed -->
-    </ul>
+      </h2>
+      <div class="project-description">
+        <p>
+          <strong>Overview:</strong> Using a greedy best-first algorithm with
+          Manhattan distance heuristic, this simulation navigates a maze
+          generated by Perlin noise to find the shortest path to a goal. It's
+          akin to searching in the dark, guided by sound alone.
+        </p>
+        <p>
+          <strong>Successes and Discoveries:</strong> The project showcases the
+          effectiveness of heuristics in pathfinding, creating an engaging
+          visual demonstration of the algorithm navigating through dynamically
+          generated mazes.
+        </p>
+        <p>
+          <strong>Challenges:</strong> One significant hurdle was dealing with
+          scenarios where no path exists due to the maze layout. My ongoing task
+          is to develop a preemptive solution to identify and handle such cases
+          efficiently.
+        </p>
+      </div>
+    </section>
+    <!-- Additional projects can be added here -->
   </body>
 </html>
