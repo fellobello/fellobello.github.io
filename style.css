@@ -1,16 +1,16 @@
 /* style.css */
 :root {
     /* Base colors */
-    --dark-background: #2a2d34; /* A deep, dark gray for the background */
-    --light-text: #e3f6f5; /* A bright, crisp white for text */
-    --accent-color: #87e6e6; /* A soft, light teal for accents */
-    --highlight-color: #ef7b45; /* A vibrant orange for highlights and links */
-    --secondary-text: #a7bbc7; /* A muted blue for secondary text */
-    --border-color: #3f4045; /* A slightly lighter gray for borders and separators */
+    --dark-background: #202722; /* Dark gray for the background */
+    --light-text: #ffffff; /* White for text */
+    --accent-color: #ff9650; /* Soft peach for accents */
+    --highlight-color: #c95bd8; /* A vibrant purple for highlights and links */
+    --secondary-text: #b3b3b3; /* A muted gray for secondary text */
+    --border-color: #333333; /* A slightly lighter gray for borders and separators */
 
     /* Typography */
-    --heading-font: 'Courier New', Courier, monospace; /* A fun, quirky choice for headings */
-    --body-font: 'Arial', sans-serif; /* A clean, readable font for body text */
+    --heading-font: 'Arial', sans-serif; /* A clean, modern font for headings */
+    --body-font: 'Arial', sans-serif; /* A clean, modern font for body text */
 }
 
 body {
@@ -49,6 +49,8 @@ li {
     margin-bottom: 15px; /* Space between list items */
     padding: 10px;
     border-bottom: 1px solid var(--border-color);
+    background-color: #333333; /* Dark gray background for list items */
+    border-radius: 8px; /* Rounded corners for list items */
 }
 
 .project-description {
