@@ -4,7 +4,7 @@ let noiseScale = 0.03;
 let startCell, goalCell;
 let whiteCells = [];
 let numCells = 100;
-let sizeCanvas = 1000;
+let sizeCanvas = 800;
 
 const colors = {
     background: '#E9C46A', // Mustard yellow
@@ -30,15 +30,16 @@ function drawCell(x, y, width, height, fillColor, strokeColor = colors.border) {
 function setup() {
   createCanvas(sizeCanvas, sizeCanvas, WEBGL);
   background(colors.background);
-  // Adjust for WebGL coordinate system
   translate(-width / 2, -height / 2);
   rows = numCells;
   cols = numCells;
   cellWidth = width / cols;
   cellHeight = height / rows;
-  
+
+  // Clear previous state if necessary
+  whiteCells = [];
   console.log("Setting up the grid...");
-  generateGrid();
+  generateGrid(); // Note: generateGrid might need adjustments to return a boolean status
   console.log("Starting pathfinding...");
   startPathfinding();
 }
@@ -74,51 +75,61 @@ function colorCell(cell, col) {
 }
 
 function calculatePath(startCell, goalCell, grid) {
-    console.log("Calculating path from start to goal...");
-  
-    // Initialize the open list with the starting cell
-    let openList = [startCell];
-    // Initialize the path array
-    let path = [];
-    // Set to keep track of visited cells to avoid revisiting them
-    let visited = new Set([`${startCell.i},${startCell.j}`]);
-    
-    while (openList.length > 0) {
+  console.log("Calculating path from start to goal...");
+
+  let openList = [startCell];
+  let path = [];
+  let visited = new Set([`${startCell.i},${startCell.j}`]);
+  let iterations = 0; // Initialize an iteration counter
+  const maxIterations = 100000; // Set a maximum number of iterations to prevent infinite loops
+
+  while (openList.length > 0) {
+      iterations++; // Increment the iteration counter
+      if (iterations > maxIterations) {
+          console.log("Max iterations reached. Unable to find a path.");
+          return null; // Return null or an appropriate value to indicate failure
+      }
+
       let currentCell = openList.shift(); // Take the first cell from the list
-      
+    
       // Add the current cell to the path
       path.push(currentCell);
-      
+    
       // Check if we've reached the goal
       if (currentCell.i === goalCell.i && currentCell.j === goalCell.j) {
-        console.log("Goal reached!");
-        break;
+          console.log("Goal reached!");
+          break;
       }
-      
+    
       // Get neighbors of the current cell
       let neighbors = getNeighbors(currentCell, grid, visited);
-      
+    
       // If there are no neighbors, it's a dead end; backtrack by removing the last cell from the path
       if (neighbors.length === 0) {
-        path.pop();
-        if (path.length > 0) {
-          openList.unshift(path[path.length - 1]); // Revisit the previous cell
-        }
-        continue;
+          path.pop();
+          if (path.length > 0) {
+              openList.unshift(path[path.length - 1]); // Revisit the previous cell
+          }
+          continue;
       }
-      
+    
       // Sort neighbors by their distance to the goal (heuristic)
       neighbors.sort((a, b) => manhattanDistance(a, goalCell) - manhattanDistance(b, goalCell));
-      
+    
       // Add the closest neighbor to the open list to explore next
       openList.unshift(neighbors[0]);
-      
+    
       // Mark the chosen neighbor as visited
       visited.add(`${neighbors[0].i},${neighbors[0].j}`);
-    }
-  
-    console.log("Path calculated:", path);
-    return path;
+  }
+
+  if (iterations <= maxIterations) {
+      console.log("Path calculated:", path);
+      return path;
+  } else {
+      // This else block might never be reached due to the return statement above,
+      // but it's here to illustrate handling of different outcomes.
+  }
 }
   
 function getNeighbors(cell, grid, visited) {
@@ -162,7 +173,14 @@ function animatePath(path) {
   
 function startPathfinding() {
   let path = calculatePath(startCell, goalCell, whiteCells);
-  animatePath(path);
+  if (path === null) {
+      // If pathfinding failed, restart the simulation
+      console.log("Pathfinding failed. Restarting the simulation...");
+      setTimeout(setup, 1000); // Restart after a short delay to avoid freezing
+  } else {
+      // If a path is found, proceed with animation
+      animatePath(path);
+  }
 }
 
 function isConnected(startCell, goalCell, grid) {
