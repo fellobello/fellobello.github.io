@@ -2,7 +2,7 @@
 let grid;
 let cols;
 let rows;
-let radius = 25;
+let radius = 15;
 let hexHeight;
 let born = 2; // Number of neighbors for a cell to be "born"
 let minSurvive = 3; // Min neighbors for a cell to survive
