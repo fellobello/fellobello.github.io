@@ -2,8 +2,8 @@
 :root {
   --dark-background: #202227;
   --light-text: #ffffff;
-  --accent-color: #ff9650;
-  --highlight-color: #c95bd8;
+  --accent-color: #e05634;
+  --highlight-color: #f1e756;
   --secondary-text: #b3b3b3;
   --border-color: #333333;
 
@@ -13,15 +13,15 @@
 
 header {
   padding: 0px 0;
-  margin: 0; /* Ensure there's no default margin */
+  margin: 0;
 }
 
 .header-content {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin: 0; /* Reset any inherited margin */
-  padding: 0 200px; /* Apply padding here if you want space on the sides */
+  margin: 0;
+  padding: 0 200px;
 }
 
 body {

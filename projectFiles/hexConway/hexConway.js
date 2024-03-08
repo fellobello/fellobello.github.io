@@ -4,11 +4,11 @@ let cols;
 let rows;
 let radius = 15;
 let hexHeight;
-let born = 2; // Number of neighbors for a cell to be "born"
-let minSurvive = 3; // Min neighbors for a cell to survive
-let maxSurvive = 6; // Max neighbors for a cell to survive
+let born = 2; // num of neighbors for a cell to be "born"
+let minSurvive = 3; // min neighbors for a cell to survive
+let maxSurvive = 6; // max neighbors for a cell to survive
 let frameRateSlider;
-let fadeDuration = 30; // Generations before a cell fades completely
+let fadeDuration = 30; // generations before a cell fades completely
 let bornSelect, minSurviveSelect, maxSurviveSelect, resetButton;
 let aliveColor, midFadeColor, finalFadeColor;
 
@@ -23,42 +23,42 @@ function setup() {
   textAlign(CENTER, CENTER);
 
   frameRateSlider = createSlider(1, 60, 10);
-  frameRateSlider.position(10, height + 30); // Moved down by 20px
-  createP("Frame Rate").position(10, height + 30); // Moved down by 30px
+  frameRateSlider.position(10, height + 30); 
+  createP("Frame Rate").position(10, height + 30); 
 
-  // Born parameter label and dropdown
-  createP("Born").position(50, height + 60); // Moved down by 30px to adjust for label positioning
+  // born parameter label and dropdown
+  createP("Born").position(50, height + 60);
   bornSelect = createSelect();
-  bornSelect.position(10, height + 80); // Moved down by 30px
+  bornSelect.position(10, height + 80); 
   for (let i = 1; i <= 6; i++) {
     bornSelect.option(i);
   }
   bornSelect.selected(born);
   bornSelect.changed(updateBorn);
 
-  // MinSurvive parameter label and dropdown
-  createP("Min Survive").position(50, height + 110); // Moved down by 30px to adjust for label positioning
+  // MminSurvive parameter label and dropdown
+  createP("Min Survive").position(50, height + 110); 
   minSurviveSelect = createSelect();
-  minSurviveSelect.position(10, height + 130); // Moved down by 30px
+  minSurviveSelect.position(10, height + 130); 
   for (let i = 1; i <= 6; i++) {
     minSurviveSelect.option(i);
   }
   minSurviveSelect.selected(minSurvive);
   minSurviveSelect.changed(updateMinSurvive);
 
-  // MaxSurvive parameter label and dropdown
-  createP("Max Survive").position(50, height + 160); // Moved down by 30px to adjust for label positioning
+  // maxSurvive parameter label and dropdown
+  createP("Max Survive").position(50, height + 160); 
   maxSurviveSelect = createSelect();
-  maxSurviveSelect.position(10, height + 180); // Moved down by 30px
+  maxSurviveSelect.position(10, height + 180); 
   for (let i = 1; i <= 6; i++) {
     maxSurviveSelect.option(i);
   }
   maxSurviveSelect.selected(maxSurvive);
   maxSurviveSelect.changed(updateMaxSurvive);
 
-  // Reset button
+  // reset button
   resetButton = createButton("Reset");
-  resetButton.position(10, height + 220); // Moved down by 30px
+  resetButton.position(10, height + 220);
   resetButton.mousePressed(resetGrid);
 
   aliveColor = color("rgb(247,255,153)");
@@ -78,7 +78,7 @@ function updateMaxSurvive() {
   maxSurvive = parseInt(maxSurviveSelect.value());
 }
 
-// Define the resetGrid function to reset the simulation
+// define resetGrid function to reset simulation
 function resetGrid() {
   grid = createGrid(cols, rows);
 }
@@ -88,7 +88,7 @@ function updateMaxSurvive() {
 }
 
 function draw() {
-  background(50); // Darker background
+  background(50); // darker background
   frameRate(frameRateSlider.value());
 
   for (let col = 0; col < cols; col++) {
@@ -97,20 +97,20 @@ function draw() {
       let y = row * hexHeight + (col % 2) * (hexHeight / 2);
       let cell = grid[col][row];
       if (cell.state == 1) {
-        fill(aliveColor); // Use predefined alive color
+        fill(aliveColor); // use predefined alive color
       } else {
-        // Calculate fade step to determine which color to use
+        // calculate fade step to determine which color to use
         let fadeStep = cell.deadFor / fadeDuration;
         if (fadeStep <= 0.5) {
-          // First half of the fade duration
-          fill(lerpColor(color("orange"), midFadeColor, fadeStep * 2)); // Transition to mid fade color
+          // first half of the fade duration
+          fill(lerpColor(color("orange"), midFadeColor, fadeStep * 2)); // transition to mid fade color
         } else {
-          // Second half of the fade duration
-          fill(lerpColor(midFadeColor, finalFadeColor, (fadeStep - 0.5) * 2)); // Transition to final fade color
+          // second half of the fade duration
+          fill(lerpColor(midFadeColor, finalFadeColor, (fadeStep - 0.5) * 2)); // Ttransition to final fade color
         }
       }
-      stroke(255); // White stroke to make cells pop
-      strokeWeight(0.5); // Thin stroke to keep it subtle
+      stroke(255); // white stroke to make cells pop
+      strokeWeight(0.5); // thin stroke to keep it subtle
       drawHexagon(x, y, radius);
     }
   }
@@ -118,22 +118,22 @@ function draw() {
   grid = nextGeneration(grid);
 }
 
-// Initialize the grid with objects storing state and dead counter
+// initialize grid with objects storing state and dead counter
 function createGrid(cols, rows) {
   let arr = new Array(cols);
   for (let i = 0; i < cols; i++) {
     arr[i] = new Array(rows);
     for (let j = 0; j < rows; j++) {
       arr[i][j] = {
-        state: floor(random(2)), // Randomly alive or dead
-        deadFor: 0, // Counter for dead state
+        state: floor(random(2)), // randomly alive or dead
+        deadFor: 0, // counter for dead state
       };
     }
   }
   return arr;
 }
 
-// Calculate the next generation of cells based on Game of Life rules
+// calculate next generation of cells based on Game of Life rules
 function nextGeneration(grid) {
   let newGrid = createGrid(cols, rows);
   for (let col = 0; col < cols; col++) {
@@ -145,7 +145,7 @@ function nextGeneration(grid) {
         0
       );
 
-      // Rules of Life with additional logic for fading dead cells
+      // rules of Life with additional logic for fading dead cells
       if (cell.state == 0 && aliveNeighbors == born) {
         newGrid[col][row] = { state: 1, deadFor: 0 };
       } else if (
@@ -178,7 +178,7 @@ function drawHexagon(x, y, radius) {
   pop();
 }
 
-// Adjusted getNeighbors function to include grid boundaries
+// adjusted getNeighbors function to include grid boundaries
 function getNeighbors(x, y, cols, rows) {
   let neighbors = [];
   if (x % 2 === 0) {
