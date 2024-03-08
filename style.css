@@ -2,7 +2,7 @@
 :root {
   --dark-background: #202227;
   --light-text: #ffffff;
-  --accent-color: #e05634;
+  --accent-color: #df6d51;
   --highlight-color: #f1e756;
   --secondary-text: #b3b3b3;
   --border-color: #333333;
@@ -87,6 +87,7 @@ li {
   border-radius: 50%;
   overflow: hidden;
   margin: 20px auto;
+  border: 5px solid var(--border-color); /* Adjust the thickness (5px) as needed */
 }
 
 .profile-picture img {
@@ -96,6 +97,7 @@ li {
   object-position: center center;
   border-radius: 50%;
 }
+
 
 h1 {
   margin: 0;
