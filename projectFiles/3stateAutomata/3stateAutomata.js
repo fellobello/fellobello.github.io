@@ -31,9 +31,9 @@ function draw() {
     for (let j = 0; j < rows; j++) {
       let x = i * cellSize;
       let y = j * cellSize;
-      if (grid[i][j] == 0) fill('#FFB140'); // state 0
-      else if (grid[i][j] == 1) fill('#B7B3A1'); // state 1
-      else fill('#F7F06D'); // state 2
+      if (grid[i][j] == 0) fill('#DB93B0'); // state 0
+      else if (grid[i][j] == 1) fill('#23967F'); // state 1
+      else fill('#334B49'); // state 2
       stroke(100);
       rect(x, y, cellSize, cellSize);
     }
