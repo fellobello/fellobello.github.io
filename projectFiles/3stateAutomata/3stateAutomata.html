@@ -76,33 +76,38 @@
   <body>
     <div class="container">
       <h1>Exploration of 3-State Cellular Automaton</h1>
-      <div class="section">
+      <div class="project-description">
         <h3>Project Start and Data Collection</h3>
         <p>
           The project began with the creation of a 3-state cellular automaton,
           quickly confronting the vast number of rule possibilities, in the
           order of 3^2187. Recognizing the impracticality of manual analysis due
-          to the predominance of noise, an automated approach was adopted. A
-          Java application was developed for mass data collection, simulating
-          thousands of rule sets with a heuristic to discern patterns of
-          behavior. Initial data analysis revealed two distinct groups based on
-          the stability of patterns, guiding the next steps of the
-          investigation.
+          to the predominance of noise, an automated approach was adopted. After
+          developing a way to encode my states and rules into different counting
+          systems (base 3), a Java application was developed for mass data
+          collection, simulating thousands of rule sets with a heuristic to
+          discern patterns of behavior. Initial data analysis revealed two
+          distinct groups based on the stability of patterns, guiding the next
+          steps of the investigation.
         </p>
       </div>
-      <div class="section">
+      <div class="project-description">
         <img src="Figure_1.png" alt="Data Analysis" />
         <p>
           Below are examples of stable structures observed in the simulations,
           showcasing the complexity and beauty of patterns that can emerge from
-          simple rules.
+          simple rules. In the
+          <a href="https://github.com/fellobello/3state-automata"
+            >GitHub Repo</a
+          >
+          there are more example rule sets.
         </p>
         <div class="gif-container">
           <img src="rules_0.gif" alt="Example with Rule Set 0" />
           <img src="rules_10.gif" alt="Example with Rule Set 10" />
         </div>
       </div>
-      <div class="section">
+      <div class="project-description">
         <h3>Analysis, Neural Network Integration, and Outcomes</h3>
         <p>
           Data encoding and optimization were crucial for making the dataset
@@ -115,11 +120,11 @@
           restrictions. The network was instead used to evaluate hundreds of
           rule sets, assigning scores to gauge stability. While achieving scores
           above .45 was rare, a significant concentration of scores around 0.8
-          was noted in our data analysis, presenting a targeted but elusive
-          high-score group amidst a vast possibility space.
+          was noted in our data analysis, presenting an elusive high-score group
+          amidst a vast possibility space.
         </p>
       </div>
-      <div class="section">
+      <div class="project-description">
         <h3>Simulation and Exploration on This Page</h3>
         <p>
           The simulation running on this page uses a subset of 100 out of the
