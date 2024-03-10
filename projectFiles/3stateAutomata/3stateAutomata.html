@@ -1,22 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css" />
-  <title>3-State Automata</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-    }
-    canvas {
-      display: block;
-    }
-  </style>
-</head>
-<body style="background-color: #202227;">
-  <script src="3stateAutomata.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3-State Automata</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"
+      defer
+    ></script>
+    <script src="3stateAutomata.js" defer></script>
+    <style>
+      :root {
+        --dark-background: #202227;
+        --light-text: #ffffff;
+        --accent-color: #df6d51;
+        --highlight-color: #f1e756;
+        --secondary-text: #b3b3b3;
+        --border-color: #333333;
+        --heading-font: "Tahoma", sans-serif;
+        --body-font: "Tahoma", sans-serif;
+      }
+
+      body {
+        background-color: var(--dark-background);
+        color: var(--light-text);
+        font-family: var(--body-font);
+        margin: 0;
+        padding: 20px;
+      }
+
+      a {
+        color: var(--accent-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: var(--highlight-color);
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--heading-font);
+        color: var(--light-text);
+      }
+
+      .project-description {
+        background-color: var(--border-color);
+        color: var(--light-text);
+        padding: 15px;
+        margin-top: 10px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 10px;
+        }
+      }
+
+      canvas {
+        display: block;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Exploration of 3-State Cellular Automaton</h1>
+      <div class="section">
+        <h3>Project Start and Data Collection</h3>
+        <p>
+          The project began with the creation of a 3-state cellular automaton,
+          quickly confronting the vast number of rule possibilities, in the
+          order of 3^2187. Recognizing the impracticality of manual analysis due
+          to the predominance of noise, an automated approach was adopted. A
+          Java application was developed for mass data collection, simulating
+          thousands of rule sets ith a heuristic to discern patterns of
+          behavior. Initial data analysis revealed two distinct groups based on
+          the stability of patterns, guiding the next steps of the
+          investigation.
+        </p>
+      </div>
+      <div class="section">
+        <h3>Analysis, Neural Network Integration, and Outcomes</h3>
+        <p>
+          Data encoding and optimization were crucial for making the dataset
+          manageable and intelligible for neural network analysis. Following
+          data normalization and careful selection of neural network
+          architecture tailored to our data features, the network was trained to
+          identify rule sets leading to stable structures. Despite efforts,
+          creating effective rules based on neural network outputs proved
+          challenging due to inherent limitations in capturing specific rule
+          restrictions. The network was instead used to evaluate hundreds of
+          rule sets, assigning scores to gauge stability. While achieving scores
+          above .45 was rare, a significant concentration of scores around 0.8
+          was noted in our data anlysis, presenting a targeted but elusive high-score group amidst a
+          vast possibility space.
+        </p>
+      </div>
+    </div>
+  </body>
 </html>
