@@ -20,7 +20,7 @@ function setup() {
   initializeRandomRules(numRules);
 
   restartButton = createButton('Restart');
-  restartButton.position(19, height + 25); 
+  restartButton.position(width / 2, 1700); 
   restartButton.mousePressed(restartSimulation);
   
   console.log("Initial grid:", grid);
