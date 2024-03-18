@@ -24,7 +24,7 @@ function setup() {
 
   frameRateSlider = createSlider(1, 60, 10);
   frameRateSlider.position(10, height + 30); 
-  let frameLabel = createP("Frame Rate").position(10, height + 30); 
+  let frameLabel = createP("Frame Rate").position(10, height + 50); 
   frameLabel.style('color', '#FFFFFF');
 
   // born parameter label and dropdown
