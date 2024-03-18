@@ -18,6 +18,10 @@ function setup() {
   }
   // fill in random rules
   initializeRandomRules(numRules);
+
+  restartButton = createButton('Restart');
+  restartButton.position(30, 1700); 
+  restartButton.mousePressed(restartSimulation);
   
   console.log("Initial grid:", grid);
   console.log("Rules:", rules);
@@ -31,9 +35,9 @@ function draw() {
     for (let j = 0; j < rows; j++) {
       let x = i * cellSize;
       let y = j * cellSize;
-      if (grid[i][j] == 0) fill('#FFB140'); // state 0
-      else if (grid[i][j] == 1) fill('#B7B3A1'); // state 1
-      else fill('#F7F06D'); // state 2
+      if (grid[i][j] == 0) fill('#9baae8'); // state 0
+      else if (grid[i][j] == 1) fill('#23967F'); // state 1
+      else fill('#334B49'); // state 2
       stroke(100);
       rect(x, y, cellSize, cellSize);
     }
@@ -83,42 +87,52 @@ function applyRules(currentState, neighbors) {
         rule[2] == neighbors[1] &&
         rule[3] == neighbors[2] &&
         rule[4] == neighbors[3]) {
-      return rule[5]; // return next state if rule matches
+      return rule[5]; 
     }
   }
-  return currentState; // no rule matched, remain in current state
+  return currentState; 
 }
 
 function initializeRandomRules(n) {
-    let existingRules = {}; // Object to store existing rules
+    let existingRules = {}; 
   
     while (Object.keys(existingRules).length < n) {
-      // Generate a potential rule
       let ruleKey = [
         floor(random(3)), // currentState
         floor(random(3)), // top
         floor(random(3)), // right
         floor(random(3)), // bottom
         floor(random(3))  // left
-      ].join(","); // Create a string key by joining the conditions
+      ].join(","); // create a string key by joining the conditions
   
       let nextState = floor(random(3)); // nextState
   
-      // Check if the rule already exists and if it has a different nextState
+      // check if the rule already exists and if it has a different nextState
       if (existingRules.hasOwnProperty(ruleKey) && existingRules[ruleKey] !== nextState) {
-        // If the rule exists but with a different nextState, skip adding this rule
+        // if the rule exists but with a different nextState, skip adding this rule
         continue;
       } else {
-        // If the rule doesn't exist, or it exists with the same nextState, add/overwrite it
+        // if the rule doesn't exist, or it exists with the same nextState, add/overwrite it
         existingRules[ruleKey] = nextState;
       }
     }
   
-    // Convert the existingRules object back into the rules array format
+    // convert the existingRules object back into the rules array format
     rules = Object.keys(existingRules).map((key) => {
-      let parts = key.split(",").map(Number); // Convert string back to numbers
-      parts.push(existingRules[key]); // Add the nextState
+      let parts = key.split(",").map(Number); // convert string back to numbers
+      parts.push(existingRules[key]); // add the nextState
       return parts;
     });
 }
+ 
+function restartSimulation() {
+  // reinitialize the grid with random states
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
+      grid[i][j] = floor(random(3));
+    }
+  }
+  initializeRandomRules(numRules);
   
+  console.log("Simulation restarted with new random states and rules.");
+}
