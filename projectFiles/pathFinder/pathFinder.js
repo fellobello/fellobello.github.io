@@ -4,15 +4,15 @@ let noiseScale = 0.03;
 let startCell, goalCell;
 let whiteCells = [];
 let numCells = 100;
-let sizeCanvas = 800;
+let sizeCanvas = 400;
 
 const colors = {
     background: '#E9C46A', // Mustard yellow
     obstacle: '#2A9D8F', // Teal
-    open: '#F4F1DE', // Light cream
-    start: '#5accfa', // cyan
+    open: '#202227', // Light cream
+    start: '#f74fa0', // cyan
     goal: '#E76F51', // Burnt sienna
-    path: '#b4a7d6', // Beige
+    path: '#f7e74f', // Beige
     border: '#A8D5BA' // Mint green
 };
   
@@ -35,6 +35,7 @@ function setup() {
   cols = numCells;
   cellWidth = width / cols;
   cellHeight = height / rows;
+  createRestartButton();
 
   whiteCells = [];
   console.log("Setting up the grid...");
@@ -193,4 +194,19 @@ function isConnected(startCell, goalCell, grid) {
   
     return false;
 }
-  
+
+function createRestartButton() {
+  let restartButton = createButton('Restart Simulation');
+  restartButton.position(20, sizeCanvas + 20); // Adjust as necessary
+  restartButton.mousePressed(restartSimulation);
+}
+
+function restartSimulation() {
+  // Clear the canvas and re-initialize the simulation setup
+  clear(); // Clear the canvas
+  setup(); // Call setup to restart the simulation
+
+  // Alternatively, if you don't want to re-create the canvas and other setup steps,
+  // you could directly call the functions that initialize the simulation state,
+  // like generateGrid() and startPathfinding(), and any other necessary state resets.
+}
