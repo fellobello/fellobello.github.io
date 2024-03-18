@@ -27,7 +27,8 @@ function setup() {
   createP("Frame Rate").position(10, height + 30); 
 
   // born parameter label and dropdown
-  createP("Born").position(50, height + 60);
+  let bornLabel = createP("Born").position(50, height + 60);
+  bornLabel.style('color', '#FFFFFF');
   bornSelect = createSelect();
   bornSelect.position(10, height + 80); 
   for (let i = 1; i <= 6; i++) {
@@ -37,7 +38,8 @@ function setup() {
   bornSelect.changed(updateBorn);
 
   // MminSurvive parameter label and dropdown
-  createP("Min Survive").position(50, height + 110); 
+  let minSurviveLabel = createP("Min Survive").position(50, height + 110);
+  minSurviveLabel.style('color', '#FFFFFF');
   minSurviveSelect = createSelect();
   minSurviveSelect.position(10, height + 130); 
   for (let i = 1; i <= 6; i++) {
@@ -47,7 +49,8 @@ function setup() {
   minSurviveSelect.changed(updateMinSurvive);
 
   // maxSurvive parameter label and dropdown
-  createP("Max Survive").position(50, height + 160); 
+  let maxSurviveLabel = createP("Max Survive").position(50, height + 160);
+  maxSurviveLabel.style('color', '#FFFFFF');
   maxSurviveSelect = createSelect();
   maxSurviveSelect.position(10, height + 180); 
   for (let i = 1; i <= 6; i++) {
