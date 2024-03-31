@@ -4,16 +4,16 @@ let noiseScale = 0.03;
 let startCell, goalCell;
 let whiteCells = [];
 let numCells = 100;
-let sizeCanvas = 800;
+let sizeCanvas = 400;
 
 const colors = {
-    background: '#E9C46A', // Mustard yellow
-    obstacle: '#2A9D8F', // Teal
-    open: '#F4F1DE', // Light cream
-    start: '#5accfa', // cyan
-    goal: '#E76F51', // Burnt sienna
-    path: '#b4a7d6', // Beige
-    border: '#A8D5BA' // Mint green
+    background: '#E9C46A', 
+    obstacle: '#2A9D8F', 
+    open: '#202227', 
+    start: '#f74fa0',
+    goal: '#E76F51', 
+    path: '#f7e74f', 
+    border: '#A8D5BA' 
 };
   
 function drawCell(x, y, width, height, fillColor, strokeColor = colors.border) {
@@ -35,6 +35,7 @@ function setup() {
   cols = numCells;
   cellWidth = width / cols;
   cellHeight = height / rows;
+  createRestartButton();
 
   whiteCells = [];
   console.log("Setting up the grid...");
@@ -193,4 +194,14 @@ function isConnected(startCell, goalCell, grid) {
   
     return false;
 }
-  
+
+function createRestartButton() {
+  let restartButton = createButton('Restart Simulation');
+  restartButton.position(20, sizeCanvas + 20); 
+  restartButton.mousePressed(restartSimulation);
+}
+
+function restartSimulation() {
+  clear(); 
+  setup(); 
+}
