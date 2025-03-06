@@ -1,143 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="C:\Users\scoch\OneDrive\Desktop\CODE\fellobello.github.io\style.css" />
     <title>3-State Automata</title>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"
-      defer
-    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js" defer></script>
     <script src="3stateAutomata.js" defer></script>
-    <style>
-      :root {
-        --dark-background: #202227;
-        --light-text: #ffffff;
-        --accent-color: #df6d51;
-        --highlight-color: #f1e756;
-        --secondary-text: #b3b3b3;
-        --border-color: #333333;
-        --heading-font: "Tahoma", sans-serif;
-        --body-font: "Tahoma", sans-serif;
-      }
+</head>
 
-      body {
-        background-color: var(--dark-background);
-        color: var(--light-text);
-        font-family: var(--body-font);
-        margin: 0;
-        padding: 20px;
-      }
+<body>
+    <main class="main-content">
+        <section class="section">
+            <h1 class="section-title">Exploration of 3-State Cellular Automaton</h1>
+        </section>
 
-      a {
-        color: var(--accent-color);
-        text-decoration: none;
-        transition: color 0.3s ease;
-      }
+        <section class="section">
+            <h2 class="section-title">Project Start and Data Collection</h2>
+            <div class="section-description">
+                <p>
+                    The project began with the creation of a 3-state cellular automaton,
+                    quickly confronting the vast number of rule possibilities, in the
+                    order of 3^2187. Recognizing the impracticality of manual analysis due
+                    to the predominance of noise, an automated approach was adopted. After
+                    developing a way to encode my states and rules into different counting
+                    systems (base n where n is the number of states), a Java application
+                    was developed for mass data collection, simulating thousands of rule
+                    sets with a heuristic to discern patterns of behavior. Initial data
+                    analysis revealed two distinct groups based on the stability of
+                    patterns, guiding the next steps of the investigation.
+                </p>
+            </div>
+        </section>
 
-      a:hover {
-        color: var(--highlight-color);
-      }
+        <section class="section">
+            <h2 class="section-title">Data Analysis and Examples</h2>
+            <div class="section-description">
+                <img src="Figure_1.png" alt="Data Analysis" />
+                <p>
+                    Below are examples of stable structures observed in the simulations,
+                    showcasing the complexity and beauty of patterns that can emerge from
+                    simple rules. In the
+                    <a href="https://github.com/fellobello/3state-automata">GitHub Repository</a>
+                    there are more example rule sets.
+                </p>
+                <div class="gif-container">
+                    <img src="rules_0.gif" alt="Example with Rule Set 0" />
+                    <img src="rules_10.gif" alt="Example with Rule Set 10" />
+                    <img src="rules_x.gif" alt="Example with Rule Set" />
+                    <img src="rules_y.gif" alt="Example with Rule Set" />
+                </div>
+            </div>
+        </section>
 
-      h1,
-      h2,
-      h3 {
-        font-family: var(--heading-font);
-        color: var(--light-text);
-      }
+        <section class="section">
+            <h2 class="section-title">Analysis, Neural Network Integration, and Outcomes</h2>
+            <div class="section-description">
+                <p>
+                    Data encoding and optimization were crucial for making the dataset
+                    manageable and intelligible for neural network analysis. Following
+                    data normalization and careful selection of neural network
+                    architecture tailored to our data features, the network was trained to
+                    identify rule sets leading to stable structures. Despite efforts,
+                    creating effective rules based on neural network outputs proved
+                    challenging due to inherent limitations in capturing specific rule
+                    restrictions. The network was instead used to evaluate hundreds of
+                    rule sets, assigning scores to gauge stability. While achieving scores
+                    above .45 was rare, a significant concentration of scores around 0.8
+                    was noted in our data analysis, presenting an elusive high-score group
+                    amidst a vast possibility space.
+                </p>
+            </div>
+        </section>
 
-      .project-description {
-        background-color: var(--border-color);
-        color: var(--light-text);
-        padding: 15px;
-        margin-top: 10px;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
+        <section class="section">
+            <h2 class="section-title">Simulation and Exploration on This Page</h2>
+            <div class="section-description">
+                <p>
+                    The simulation running on this page uses a subset of 100 out of the
+                    possible 243 rules to avoid overwhelming chaos, allowing for clearer
+                    observation of emergent patterns. Notably, these simulations are less
+                    chaotic than those used in our examples, which all have over 200
+                    rules. Clicking the "Restart" button reinitializes the board with new
+                    rules and random states for each cell, enabling exploration of the
+                    wide array of possibilities within a more controlled chaos.
+                </p>
+            </div>
+        </section>
+    </main>
+</body>
 
-      canvas {
-        display: block;
-        margin: auto;
-      }
-
-      .gif-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .gif-container img {
-        margin: 0 10px;
-        width: 200px;
-        height: auto;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Exploration of 3-State Cellular Automaton</h1>
-      <div class="project-description">
-        <h3>Project Start and Data Collection</h3>
-        <p>
-          The project began with the creation of a 3-state cellular automaton,
-          quickly confronting the vast number of rule possibilities, in the
-          order of 3^2187. Recognizing the impracticality of manual analysis due
-          to the predominance of noise, an automated approach was adopted. After
-          developing a way to encode my states and rules into different counting
-          systems (base n where n is the number of states), a Java application
-          was developed for mass data collection, simulating thousands of rule
-          sets with a heuristic to discern patterns of behavior. Initial data
-          analysis revealed two distinct groups based on the stability of
-          patterns, guiding the next steps of the investigation.
-        </p>
-      </div>
-      <div class="project-description">
-        <img src="Figure_1.png" alt="Data Analysis" />
-        <p>
-          Below are examples of stable structures observed in the simulations,
-          showcasing the complexity and beauty of patterns that can emerge from
-          simple rules. In the
-          <a href="https://github.com/fellobello/3state-automata"
-            >GitHub Repository</a
-          >
-          there are more example rule sets.
-        </p>
-        <div class="gif-container">
-          <img src="rules_0.gif" alt="Example with Rule Set 0" />
-          <img src="rules_10.gif" alt="Example with Rule Set 10" />
-          <img src="rules_x.gif" alt="Example with Rule Set" />
-          <img src="rules_y.gif" alt="Example with Rule Set" />
-        </div>
-      </div>
-      <div class="project-description">
-        <h3>Analysis, Neural Network Integration, and Outcomes</h3>
-        <p>
-          Data encoding and optimization were crucial for making the dataset
-          manageable and intelligible for neural network analysis. Following
-          data normalization and careful selection of neural network
-          architecture tailored to our data features, the network was trained to
-          identify rule sets leading to stable structures. Despite efforts,
-          creating effective rules based on neural network outputs proved
-          challenging due to inherent limitations in capturing specific rule
-          restrictions. The network was instead used to evaluate hundreds of
-          rule sets, assigning scores to gauge stability. While achieving scores
-          above .45 was rare, a significant concentration of scores around 0.8
-          was noted in our data analysis, presenting an elusive high-score group
-          amidst a vast possibility space.
-        </p>
-      </div>
-      <div class="project-description">
-        <h3>Simulation and Exploration on This Page</h3>
-        <p>
-          The simulation running on this page uses a subset of 100 out of the
-          possible 243 rules to avoid overwhelming chaos, allowing for clearer
-          observation of emergent patterns. Notably, these simulations are less
-          chaotic than those used in our examples, which all have over 200
-          rules. Clicking the "Restart" button reinitializes the board with new
-          rules and random states for each cell, enabling exploration of the
-          wide array of possibilities within a more controlled chaos.
-        </p>
-      </div>
-    </div>
-  </body>
 </html>

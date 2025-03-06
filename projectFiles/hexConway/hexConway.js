@@ -2,7 +2,7 @@
 let grid;
 let cols;
 let rows;
-let radius = 15;
+let radius = 20; // Reduced radius
 let hexHeight;
 let born = 2; // num of neighbors for a cell to be "born"
 let minSurvive = 3; // min neighbors for a cell to survive
@@ -13,7 +13,8 @@ let bornSelect, minSurviveSelect, maxSurviveSelect, resetButton;
 let aliveColor, midFadeColor, finalFadeColor;
 
 function setup() {
-  createCanvas(1900, 1100);
+  createCanvas(800, 600, "canvas-container");
+  console.log("Canvas created:", canvas); // Check if canvas is valid
   hexHeight = sqrt(3) * radius;
   cols = floor(width / (1.5 * radius)) + 2;
   rows = floor(height / hexHeight) + 3;
@@ -22,48 +23,45 @@ function setup() {
   textSize(8);
   textAlign(CENTER, CENTER);
 
-  frameRateSlider = createSlider(1, 60, 10);
-  frameRateSlider.position(10, height + 30); 
-  let frameLabel = createP("Frame Rate").position(10, height + 50); 
-  frameLabel.style('color', '#FFFFFF');
+  // Get references to existing HTML elements
+  frameRateSlider = document.getElementById("frameRateSlider");
+  bornSelect = document.getElementById("bornSelect");
+  minSurviveSelect = document.getElementById("minSurviveSelect");
+  maxSurviveSelect = document.getElementById("maxSurviveSelect");
+  resetButton = document.getElementById("resetButton");
 
-  // born parameter label and dropdown
-  let bornLabel = createP("Born").position(50, height + 60);
-  bornLabel.style('color', '#FFFFFF');
-  bornSelect = createSelect();
-  bornSelect.position(10, height + 80); 
+  // Populate bornSelect
   for (let i = 1; i <= 6; i++) {
-    bornSelect.option(i);
+      let option = document.createElement("option");
+      option.value = i;
+      option.text = i;
+      bornSelect.appendChild(option);
   }
-  bornSelect.selected(born);
-  bornSelect.changed(updateBorn);
+  bornSelect.value = born; // Set initial value
 
-  // MminSurvive parameter label and dropdown
-  let minSurviveLabel = createP("Min Survive").position(50, height + 110);
-  minSurviveLabel.style('color', '#FFFFFF');
-  minSurviveSelect = createSelect();
-  minSurviveSelect.position(10, height + 130); 
+  // Populate minSurviveSelect
   for (let i = 1; i <= 6; i++) {
-    minSurviveSelect.option(i);
+      let option = document.createElement("option");
+      option.value = i;
+      option.text = i;
+      minSurviveSelect.appendChild(option);
   }
-  minSurviveSelect.selected(minSurvive);
-  minSurviveSelect.changed(updateMinSurvive);
+  minSurviveSelect.value = minSurvive; // Set initial value
 
-  // maxSurvive parameter label and dropdown
-  let maxSurviveLabel = createP("Max Survive").position(50, height + 160);
-  maxSurviveLabel.style('color', '#FFFFFF');
-  maxSurviveSelect = createSelect();
-  maxSurviveSelect.position(10, height + 180); 
+  // Populate maxSurviveSelect
   for (let i = 1; i <= 6; i++) {
-    maxSurviveSelect.option(i);
+      let option = document.createElement("option");
+      option.value = i;
+      option.text = i;
+      maxSurviveSelect.appendChild(option);
   }
-  maxSurviveSelect.selected(maxSurvive);
-  maxSurviveSelect.changed(updateMaxSurvive);
+  maxSurviveSelect.value = maxSurvive; // Set initial value
 
-  // reset button
-  resetButton = createButton("Reset");
-  resetButton.position(10, height + 220);
-  resetButton.mousePressed(resetGrid);
+  // Use standard event listeners
+  resetButton.addEventListener("click", resetGrid);
+  bornSelect.addEventListener("change", updateBorn);
+  minSurviveSelect.addEventListener("change", updateMinSurvive);
+  maxSurviveSelect.addEventListener("change", updateMaxSurvive);
 
   aliveColor = color("rgb(247,255,153)");
   midFadeColor = color("rgb(75,166,111)");
@@ -92,8 +90,9 @@ function updateMaxSurvive() {
 }
 
 function draw() {
-  background(50); // darker background
-  frameRate(frameRateSlider.value());
+  console.log("Draw function called");
+  background(100); // darker background
+  frameRate(frameRateSlider.value);
 
   for (let col = 0; col < cols; col++) {
     for (let row = 0; row < rows; row++) {

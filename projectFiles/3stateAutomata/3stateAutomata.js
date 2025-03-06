@@ -1,11 +1,11 @@
 let grid;
 let cols, rows;
-let cellSize = 10; // adjust cell size as needed
-let rules = []; // define rules
+let cellSize = 15; 
+let rules = [];
 let numRules = 100; 
 
 function setup() {
-  createCanvas(900, 600);
+  createCanvas(600, 400);
   cols = width / cellSize;
   rows = height / cellSize;
   grid = make2DArray(cols, rows);
@@ -13,14 +13,13 @@ function setup() {
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
       grid[i][j] = floor(random(3));
-      //grid[i][j] = floor(random(3));
     }
   }
   // fill in random rules
   initializeRandomRules(numRules);
 
   restartButton = createButton('Restart');
-  restartButton.position(30, 1700); 
+  restartButton.position(20, 420); 
   restartButton.mousePressed(restartSimulation);
   
   console.log("Initial grid:", grid);
@@ -58,8 +57,6 @@ function draw() {
 
   // update grid
   grid = next;
-  // terminal debugging for each draw cycle (optional, could be removed for performance)
-  console.log("Updated grid:", grid);
 }
 
 function make2DArray(cols, rows) {
