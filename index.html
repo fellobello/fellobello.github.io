@@ -6,109 +6,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <title>Steven Cochrane - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
-    <header class="site-header">
-        <div class="header-content">
-            <h1 class="site-title">Steven Cochrane</h1>
+    <div id="start-screen">
+        <h1 class="start-title">Steven Cochrane</h1>
+        <p class="start-subtitle">-digital portfolio-</p>
+        <p id="press-start" class="start-text">PRESS ANY KEY</p>
+    </div>
+    <div class="menu-wrapper pixel-corners">
+        <div class="menu-container pixel-corners">
+            <div class="menu-item selected pixel-corners" data-index="0">
+                <span class="arrow">></span> WHO ARE YOU??
+            </div>
+            <div class="menu-item pixel-corners" data-index="1">
+                <span class="arrow"></span> WHAT DO YOU DO?
+            </div>
+            <div class="menu-item pixel-corners" data-index="2">
+                <span class="arrow"></span> WHAT IS YOUR GOAL?
+            </div>
+            <div class="menu-item pixel-corners" data-index="3">
+                <span class="arrow"></span> I HAVE A QUESTION..
+            </div>
+        </div>
+    </div>
+    <div class="content-container">
+        <div class="content-box active" data-content-index="0">
+            <div class="section-description pixel-corners">
+                <p>
+                    Designation: Steven Cochrane. I am a computer science graduate. Areas of proficiency include mathematics and programming. My experiences encompass exploration of music, artistic endeavors, and game development. These activities appear to stimulate creativity. Primary objective: problem-solving and continuous acquisition of knowledge.
+
+                    Location: Phoenix, Arizona. Interests are... varied. I maintain an active lifestyle. This is beneficial.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-box" data-content-index="1">
+            <div class="section-description pixel-corners">
+                <p>
+                    This section contains projects. These projects demonstrate integration of mathematical concepts and programming principles. Further data is available on GitHub: <a href="https://github.com/fellobello">GitHub</a>. Emphasis has been placed on code clarity and solution efficacy. It is... acceptable.    
+                </p>
+                
+                <button id="read-more-projects" tabindex="0">Read More</button>
+            </div>
+        </div>
+
+        <div class="content-box" data-content-index="2">
+            <div class="section-description pixel-corners">
+                <p>
+                    Proficiencies include: Java, Python, HTML/CSS/JavaScript, C#, and x86 Assembly. I possess skills in algorithm design. My foundational knowledge base includes: Set Theory, Statistics, Linear Algebra, and Calculus.
+
+                    Current interests: quantum and analogue computing, cellular automata (a curious phenomenon), data analysis, and game theory. Collaboration on impactful projects is desired.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-box" data-content-index="3">
+            <div class="section-description pixel-corners">
+                <p>
+                    Inquiries, proposals, or collaborative opportunities are welcome.
+
+                    Communication methods: Email at <a href="mailto:cochranesteven137@gmail.com">cochranesteven137@gmail.com</a>, or via GitHub: <a href="https://github.com/fellobello">GitHub</a>.
+                </p>
+            </div>
+        </div>
+        <div class="profile-container">
             <img src="profilePic2.png" alt="Profile Picture" class="profile-picture pixel-corners" />
         </div>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
-    </header>
+    </div>
 
-    <main class="main-content">
-        <section id="about" class="section">
-            <h2 class="section-title">ABOUT ME</h2>
-            <div class="section-description pixel-corners">
-                <p>
-                    I've always loved math, and it's become a big part of my life.
-                    When COVID-19 hit, I took a break from school. During that time, I
-                    explored my interest in music and collaborated with other artists. I
-                    also enjoy arts and crafting, even though I'm not the best artist.
-                    Game development eventually became a creative outlet for me and I
-                    began to start coding almost everyday. I first started coding in highschool 
-                    for my robotics team. Eventually, I found my love for coding again and realized that
-                    it was the best way to explore all my interests.
-                    Since beginning my Bachelors Degree in Computer Science, I have slowly
-                    become more and more addicted to everything math and code. There is
-                    always something new to learn.
-                </p>
-                <p>
-                    I'm from Phoenix, Arizona, and I live with two cats. I'm an INTJ according
-                    to the Myers-Briggs test. Exercise is part of my daily routine. My interests
-                    are diverse and tend to change frequently.
-                </p>
-            </div>
-        </section>
+    <div id="popup-container" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60%; height: 40%; background-color: #228B22; border: 2px solid black;">
+    </div>
 
-        <section id="projects" class="section">
-            <h2 class="section-title"><a href="Projects.html">FEATURED PROJECTS</a></h2>
-            <div class="section-description pixel-corners">
-                <p>
-                    Here's a collection of projects that showcase how I have blended
-                    mathematical concepts with programming. I highly suggest checking
-                    out my
-                    <a href="https://github.com/fellobello">GitHub</a>
-                    page as well. These simulations are based
-                    on simple mathematical and algorithmic concepts. Ive tried to leave
-                    comments in the source code to better explain how our scripts work
-                    step by step.
-                </p>
-                <p>
-                    I've tried to explore topics here that interest me personally while
-                    demonstrating coding fundamentals and my ability to organize
-                    code/projects along the way.
-                </p>
-            </div>
-        </section>
-
-        <section id="future" class="section">
-            <h2 class="section-title">LOOKING AHEAD</h2>
-            <div class="section-description pixel-corners">
-                <p>
-                    I currently have the most experience with programming in Java and Python,
-                    and I feel fairly confident problem solving with these tools and many of
-                    their libraries. I am less knowledgable but still familiar with HTML/CSS/Javascript
-                    for static web design, C# for Unity scripts, and the basics of x86 Assembly. I
-                    have a fairly comprehensive understanding of constructing and utilizing algorithms
-                    for time or memory efficient problem solving, mostly with Java due to the stricter controls.
-                    I have a solid understanding of Set Theory, Statistics, Linear Algebra, Boolean Algebra,
-                    Calculus, Trigonometry, Combinatorics, Vector and Matrix Math, and Number Theory in general.
-                </p>
-                <p>
-                    Right now, I'm interested in quantum and analogue computing,
-                    cellular automata, data analysis, emergent behaviors in
-                    dynamic systems, and game theory. In the future, I want to
-                    be part of a team. I really love math, and it's hard to find
-                    people who share my interests. Ultimately, I want to use my
-                    skills to change the world in meaningful ways.
-                </p>
-            </div>
-        </section>
-
-        <section id="contact" class="section">
-            <h2 class="section-title">GET IN TOUCH</h2>
-            <div class="section-description pixel-corners">
-                <p>
-                    For questions, suggestions, or collaboration opportunities, please
-                    don't hesitate to contact me. Let's discuss how we can work together
-                    on future projects.
-                </p>
-                <p>
-                    You can reach me via email at
-                    <a href="mailto:cochranesteven137@gmail.com">cochranesteven137@gmail.com</a>
-                    or check out my GitHub page at
-                    <a href="https://github.com/fellobello">fellobello</a>.
-                </p>
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        </footer>
+    <script src="script.js"></script>
 </body>
 
 </html>
