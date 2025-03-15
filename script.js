@@ -5,11 +5,10 @@ const contentContainer = document.querySelector('.content-container');
 const menuItems = document.querySelectorAll('.menu-item');
 const contentBoxes = document.querySelectorAll('.content-box');
 const pressStart = document.getElementById('press-start');
-//const readMoreButton = document.getElementById('read-more');
 const popupContainer = document.getElementById('popup-container');
-const popupText = document.getElementById('popup-description');
 const popupTitle = document.getElementById('popup-title');
-const popupDescription = document.getElementById('popup-description');
+const popupText = document.getElementById('popup-description');
+const projectButtons = document.querySelectorAll('.read-more-project');
 
 // --- State Variables ---
 let selectedIndex = 0;
@@ -17,6 +16,8 @@ let gameStarted = false;
 let currentTypewriterAbort = false;
 let timeoutId;
 let currentTypewriterPromise;
+let isNavigatingProjects = false;
+let selectedProjectIndex = 0;
 
 // --- Utility Functions ---
 
@@ -25,10 +26,10 @@ let currentTypewriterPromise;
  *
  * @param {HTMLElement} element - The element to type into.
  * @param {string} text - The text to type.
- * @param {number} [delay=20] - The delay between characters in milliseconds.
+ * @param {number} [delay=15] - The delay between characters in milliseconds.
  * @returns {Promise<void>}
  */
-async function typeWriter(element, text, delay = 20) {
+async function typeWriter(element, text, delay = 15) {
     element.innerHTML = '';
     currentTypewriterAbort = false;
     let writtenText = '';
@@ -92,6 +93,8 @@ function selectMenuItem(index) {
     });
     selectedIndex = index;
     showContent(index);
+    resetProjectButtonSelection();
+    isNavigatingProjects = false;
 }
 
 /**
@@ -127,11 +130,11 @@ async function loadAndShowProject(projectKey) {
             const project = data[projectKey];
 
             popupTitle.textContent = project.title;
-            popupText.innerHTML = project.text.replace(/\n\n/g, '<p></p>'); // Handle paragraphs
+            popupText.innerHTML = project.text.replace(/\n\n/g, '<p></p>');
 
             if (project.images && project.images.length > 0) {
-                const imageContainer = document.createElement('div'); // Create a div
-                imageContainer.classList.add('gif-container'); // Add the gif-container class
+                const imageContainer = document.createElement('div');
+                imageContainer.classList.add('gif-container');
 
                 project.images.forEach(imagePath => {
                     const img = document.createElement('img');
@@ -153,9 +156,32 @@ async function loadAndShowProject(projectKey) {
     }
 }
 
+/**
+ * Selects a project button.
+ *
+ * @param {number} index - The index of the project button to select.
+ */
+function selectProjectButton(index) {
+    projectButtons.forEach((button, i) => {
+        if (i === index) {
+            button.classList.add('selected');
+        } else {
+            button.classList.remove('selected');
+        }
+    });
+    selectedProjectIndex = index;
+}
+
+/**
+ * Resets the selection of project buttons.
+ */
+function resetProjectButtonSelection() {
+    projectButtons.forEach(button => button.classList.remove('selected'));
+    selectedProjectIndex = 0;
+}
+
 // --- Event Listeners ---
 
-// Menu item click handler
 menuItems.forEach((item, index) => {
     item.addEventListener('click', () => {
         if (gameStarted) {
@@ -164,32 +190,47 @@ menuItems.forEach((item, index) => {
     });
 });
 
-// Keydown event handler
 document.addEventListener('keydown', event => {
     if (!gameStarted) {
         startGame();
     } else {
-        if (event.key === 'ArrowDown' || event.key.toLowerCase() === 's') {
-            selectedIndex = (selectedIndex + 1) % menuItems.length;
-        } else if (event.key === 'ArrowUp' || event.key.toLowerCase() === 'w') {
-            selectedIndex = (selectedIndex - 1 + menuItems.length) % menuItems.length;
+        if (isNavigatingProjects) {
+            const projectCount = projectButtons.length;
+            if (event.key === 'ArrowRight' || event.key.toLowerCase() === 'd') {
+                selectedProjectIndex = (selectedProjectIndex + 1) % projectCount;
+                selectProjectButton(selectedProjectIndex);
+            } else if ((event.key === 'ArrowLeft' || event.key.toLowerCase() === 'a') && selectedProjectIndex === 0) {
+                isNavigatingProjects = false;
+                resetProjectButtonSelection();
+            } else if (event.key === 'ArrowLeft' || event.key.toLowerCase() === 'a') {
+                selectedProjectIndex = (selectedProjectIndex - 1 + projectCount) % projectCount;
+                selectProjectButton(selectedProjectIndex);
+            } else if (event.key === ' ') {
+                const selectedButton = projectButtons[selectedProjectIndex];
+                if (selectedButton) {
+                    selectedButton.click();
+                }
+            }
+        } else {
+            const menuCount = menuItems.length;
+            if (event.key === 'ArrowDown' || event.key.toLowerCase() === 's') {
+                selectedIndex = (selectedIndex + 1) % menuCount;
+                selectMenuItem(selectedIndex);
+            } else if (event.key === 'ArrowUp' || event.key.toLowerCase() === 'w') {
+                selectedIndex = (selectedIndex - 1 + menuCount) % menuCount;
+                selectMenuItem(selectedIndex);
+            } else if ((event.key === 'ArrowRight' || event.key.toLowerCase() === 'd') && selectedIndex === 1) {
+                isNavigatingProjects = true;
+                selectProjectButton(selectedProjectIndex);
+            }
         }
-        selectMenuItem(selectedIndex);
     }
 });
 
-// "Read More" button click handler
-//readMoreButton.addEventListener('click', () => {
-//    popupContainer.style.display = 'block';
-//});
-
-// Popup click handler
 popupContainer.addEventListener('click', () => {
     popupContainer.style.display = 'none';
 });
 
-// Project button click handlers
-const projectButtons = document.querySelectorAll('.read-more-project');
 projectButtons.forEach(button => {
     button.addEventListener('click', function() {
         const projectKey = this.dataset.projectKey;
@@ -199,9 +240,7 @@ projectButtons.forEach(button => {
 
 // --- Initialization ---
 
-// Hide menu and content initially
 menuWrapper.style.display = 'none';
 contentContainer.style.display = 'none';
 
-// Start flashing "Press Start" text
 setInterval(flashPressStart, 500);

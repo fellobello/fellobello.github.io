@@ -153,6 +153,22 @@ a:hover {
     white-space: nowrap;
 }
 
+.read-more-project {
+    color: var(--highlight);
+    background-color: var(--secondary);
+    font-family: var(--font-main);
+    margin: 10px;
+    padding: 12px;
+    padding-right: 32px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.read-more-project.selected {
+    background-color: var(--border); /* Or your preferred style */
+    color: var(--text-light);
+}
+
 .selected {
     /*font-weight: bold;*/
     color: var(--highlight);
@@ -210,6 +226,12 @@ a:hover {
     background-color: var(--bg-dark);
     padding: 10px;
     border-radius: 5px;
+}
+
+.selection-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 #popup-container {
