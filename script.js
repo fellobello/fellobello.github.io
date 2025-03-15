@@ -1,203 +1,155 @@
+// --- DOM Elements ---
+const startScreen = document.getElementById('start-screen');
 const menuWrapper = document.querySelector('.menu-wrapper');
 const contentContainer = document.querySelector('.content-container');
 const menuItems = document.querySelectorAll('.menu-item');
 const contentBoxes = document.querySelectorAll('.content-box');
+const pressStart = document.getElementById('press-start');
+const readMoreButton = document.getElementById('read-more-projects');
+const popupContainer = document.getElementById('popup-container');
+
+// --- State Variables ---
 let selectedIndex = 0;
 let gameStarted = false;
-let isAnimating = false;
-let currentAnimation;
-let animationTimer;
-let isInsideContent = false; // Flag to track if we're in content
+let currentTypewriterAbort = false;
+let timeoutId;
+let currentTypewriterPromise;
 
-// --- ADDED: Object to store hasBeenTyped flags ---
-const hasBeenTyped = {};
+// --- Utility Functions ---
 
-// Initialize hasBeenTyped for each content box
-contentBoxes.forEach((box, index) => {
-  hasBeenTyped[index] = false;
-});
+/**
+ * Types out text in an element with a typewriter effect.
+ *
+ * @param {HTMLElement} element - The element to type into.
+ * @param {string} text - The text to type.
+ * @param {number} [delay=20] - The delay between characters in milliseconds.
+ * @returns {Promise<void>}
+ */
+async function typeWriter(element, text, delay = 20) {
+  element.innerHTML = '';
+  currentTypewriterAbort = false;
+  let writtenText = '';
 
-const animationDelay = 500;
-
-function typeWriter(element, text, i = 0) {
-    return new Promise(resolve => {
-        function animate() {
-            if (i < text.length) {
-                element.innerHTML += text.charAt(i);
-                i++;
-                currentAnimation = setTimeout(animate, 20);
-            } else {
-                resolve();
-            }
-        }
-        animate();
-    });
+  for (let i = 0; i < text.length; i++) {
+    if (currentTypewriterAbort) {
+      element.innerHTML = writtenText + text.substring(i);
+      return;
+    }
+    writtenText += text.charAt(i);
+    element.innerHTML += text.charAt(i);
+    await new Promise(resolve => setTimeout(resolve, delay));
+  }
 }
 
-// --- MODIFIED showContent FUNCTION ---
-async function showContent(index) {
-    if (currentAnimation) {
-        clearTimeout(currentAnimation);
-    }
-    isAnimating = true;
+/**
+ * Shows the content box at the given index with a typewriter effect.
+ *
+ * @param {number} index - The index of the content box to show.
+ */
+function showContent(index) {
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+  }
 
-    contentBoxes.forEach(box => {
-        box.classList.remove('active');
-    });
-
+  timeoutId = setTimeout(async () => {
+    contentBoxes.forEach(box => box.classList.remove('active'));
     const activeBox = contentBoxes[index];
     activeBox.classList.add('active');
 
     const sectionDescription = activeBox.querySelector('.section-description');
     const paragraphs = sectionDescription.querySelectorAll('p');
 
-    // --- CHECK hasBeenTyped FLAG ---
-    if (hasBeenTyped[index]) {
-        // Content has already been typed, just display it
-        paragraphs.forEach(paragraph => {
-            paragraph.innerHTML = paragraph.getAttribute('data-original-text'); // Restore original text
+    for (const paragraph of paragraphs) {
+      currentTypewriterAbort = true;
+      if (currentTypewriterPromise) {
+        await currentTypewriterPromise;
+      }
+      currentTypewriterPromise = typeWriter(paragraph, paragraph.textContent);
+      await currentTypewriterPromise;
+    }
+    timeoutId = null;
+  }, 500);
+}
 
-        });
+/**
+ * Selects the menu item at the given index and updates the UI.
+ *
+ * @param {number} index - The index of the menu item to select.
+ */
+function selectMenuItem(index) {
+  menuItems.forEach((item, i) => {
+    const arrow = item.querySelector('.arrow');
+    if (i === index) {
+      item.classList.add('selected');
+      arrow.textContent = '>';
     } else {
-        // Content hasn't been typed, run typewriter effect
-
-        for (const paragraph of paragraphs) {
-            const text = paragraph.textContent;
-            //store the original text
-            paragraph.setAttribute('data-original-text', text);
-            paragraph.textContent = '';
-            await typeWriter(paragraph, text);
-        }
-
-        // Set hasBeenTyped to true for this content box
-        hasBeenTyped[index] = true;
+      item.classList.remove('selected');
+      arrow.textContent = '';
     }
-
-    isAnimating = false;
+  });
+  selectedIndex = index;
+  showContent(index);
 }
 
-function selectItem(index) {
-    menuItems.forEach((item, i) => {
-        const arrow = item.querySelector('.arrow');
-        if (i === index) {
-            item.classList.add('selected');
-            arrow.textContent = '>';
-        } else {
-            item.classList.remove('selected');
-            arrow.textContent = '';
-        }
-    });
-    selectedIndex = index;
-
-    if (animationTimer) {
-        clearTimeout(animationTimer);
-    }
-
-    animationTimer = setTimeout(() => {
-        showContent(index);
-        animationTimer = null;
-    }, animationDelay);
-}
-
+/**
+ * Starts the game by hiding the start screen and showing the menu and content.
+ */
 function startGame() {
-    gameStarted = true;
-    document.getElementById('start-screen').style.display = 'none';
-    menuWrapper.style.display = 'flex';
-    contentContainer.style.display = 'flex';
-    selectItem(selectedIndex);
+  if (gameStarted) return;
+  gameStarted = true;
+  startScreen.style.display = 'none';
+  menuWrapper.style.display = 'flex';
+  contentContainer.style.display = 'flex';
+  selectMenuItem(selectedIndex);
 }
 
+/**
+ * Flashes the "Press Start" text.
+ */
+function flashPressStart() {
+  pressStart.style.opacity = (pressStart.style.opacity === '0' || pressStart.style.opacity === '') ? '1' : '0';
+}
+
+// --- Event Listeners ---
+
+// Menu item click handler
 menuItems.forEach((item, index) => {
-    item.addEventListener('click', () => {
-        if (gameStarted) {
-            selectItem(index);
-        }
-    });
-});
-
-document.addEventListener('keydown', (event) => {
-    if (!gameStarted) {
-        startGame();
-    } else {
-        if (!isInsideContent) {
-            // Main menu navigation (up/down)
-            if (event.key === 'ArrowDown' || event.key.toLowerCase() === 's') {
-                selectedIndex = (selectedIndex + 1) % menuItems.length;
-            } else if (event.key === 'ArrowUp' || event.key.toLowerCase() === 'w') {
-                selectedIndex = (selectedIndex - 1 + menuItems.length) % menuItems.length;
-            }
-            selectItem(selectedIndex);
-
-            // Entering content section (right arrow)
-            if (event.key === 'ArrowRight' || event.key.toLowerCase() === 'd') {
-                const activeContentBox = contentBoxes[selectedIndex];
-                const firstReadMoreButton = activeContentBox.querySelector('button[id^="read-more-"]');
-                if (firstReadMoreButton) {
-                    firstReadMoreButton.focus();
-                    isInsideContent = true;
-                    event.preventDefault(); // Prevent scrolling
-                }
-            }
-        } else {
-            // Inside content navigation (up/down/left/right)
-            const activeContentBox = contentBoxes[selectedIndex];
-            const readMoreButtons = activeContentBox.querySelectorAll('button[id^="read-more-"]');
-            const currentButtonIndex = Array.from(readMoreButtons).indexOf(document.activeElement);
-
-            if (event.key === 'ArrowDown' || event.key.toLowerCase() === 's') {
-                if (currentButtonIndex < readMoreButtons.length - 1) {
-                    readMoreButtons[currentButtonIndex + 1].focus();
-                    event.preventDefault();
-                }
-            } else if (event.key === 'ArrowUp' || event.key.toLowerCase() === 'w') {
-                if (currentButtonIndex > 0) {
-                    readMoreButtons[currentButtonIndex - 1].focus();
-                    event.preventDefault();
-                }
-            } else if (event.key === 'ArrowLeft' || event.key.toLowerCase() === 'a') {
-                // Return to main menu
-                menuItems[selectedIndex].focus();
-                isInsideContent = false;
-                event.preventDefault();
-            } else if (event.key === 'ArrowRight' || event.key.toLowerCase() === 'd' || event.key === ' ' || event.key === 'Enter') {
-                // --- ADDED: Trigger button click on Right Arrow/Space/Enter ---
-                if (document.activeElement.id.startsWith('read-more-')) {
-                    document.activeElement.click(); // Simulate a click
-                }
-            }
-        }
+  item.addEventListener('click', () => {
+    if (gameStarted) {
+      selectMenuItem(index);
     }
+  });
 });
 
-// --- ADDED READ MORE BUTTON CLICK HANDLER ---
-const readMoreButton = document.getElementById('read-more-projects');
-const popupContainer = document.getElementById('popup-container');
-
-readMoreButton.addEventListener('click', (event) => {
-    event.stopPropagation(); // Prevent menu item click
-    popupContainer.style.display = 'block'; // Show the pop-up
-    document.addEventListener('keydown', handleAnyKey);
-    document.addEventListener('click', handleAnyClick);
-    isInsideContent = false; //we want to be on the regular menu now
+// Keydown event handler
+document.addEventListener('keydown', event => {
+  if (!gameStarted) {
+    startGame();
+  } else {
+    if (event.key === 'ArrowDown' || event.key.toLowerCase() === 's') {
+      selectedIndex = (selectedIndex + 1) % menuItems.length;
+    } else if (event.key === 'ArrowUp' || event.key.toLowerCase() === 'w') {
+      selectedIndex = (selectedIndex - 1 + menuItems.length) % menuItems.length;
+    }
+    selectMenuItem(selectedIndex);
+  }
 });
 
-function handleAnyKey(event){
-    popupContainer.style.display = 'none';
-    document.removeEventListener('keydown', handleAnyKey); // cleanup
-    selectItem(selectedIndex)
-}
-function handleAnyClick(event){
-    popupContainer.style.display = 'none';
-    document.removeEventListener('click', handleAnyClick);
-}
+// "Read More" button click handler
+readMoreButton.addEventListener('click', () => {
+  popupContainer.style.display = 'block';
+});
 
-// initially hide menu and content
+// Popup click handler
+popupContainer.addEventListener('click', () => {
+  popupContainer.style.display = 'none';
+});
+
+// --- Initialization ---
+
+// Hide menu and content initially
 menuWrapper.style.display = 'none';
 contentContainer.style.display = 'none';
 
-function flashPressStart() {
-    const pressStart = document.getElementById('press-start');
-    pressStart.style.opacity = (pressStart.style.opacity === '0' || pressStart.style.opacity === '') ? '1' : '0';
-}
-
-setInterval(flashPressStart, 500); // flash speed (milliseconds)
+// Start flashing "Press Start" text
+setInterval(flashPressStart, 500);

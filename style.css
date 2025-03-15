@@ -9,6 +9,10 @@
 
     /* Font Variable */
     --font-main: "Pixelify Sans";
+
+    /* Pixel Corner */
+    --pixel-corner-size: 8px;
+    --pixel-corner-inner: 4px;
 }
 
 /* General Styles */
@@ -27,6 +31,10 @@ body {
     font-size: 20px;
 }
 
+p {
+    white-space: preserve;    
+}
+
 a {
     color: var(--accent);
     text-decoration: none;
@@ -37,13 +45,30 @@ a:hover {
     color: var(--highlight);
 }
 
+/* --- Utility Classes --- */
 .pixel-corners {
-    clip-path: polygon(0px 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0px, calc(100% - 8px) 0px,
-        calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px,
-        100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px),
-        calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px),
-        calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px),
-        4px calc(100% - 8px), 0px calc(100% - 8px));
+    clip-path: polygon(
+        0px var(--pixel-corner-size),
+        var(--pixel-corner-inner) var(--pixel-corner-size),
+        var(--pixel-corner-inner) var(--pixel-corner-inner),
+        var(--pixel-corner-size) var(--pixel-corner-inner),
+        var(--pixel-corner-size) 0px,
+        calc(100% - var(--pixel-corner-size)) 0px,
+        calc(100% - var(--pixel-corner-size)) var(--pixel-corner-inner),
+        calc(100% - var(--pixel-corner-inner)) var(--pixel-corner-inner),
+        calc(100% - var(--pixel-corner-inner)) var(--pixel-corner-size),
+        100% var(--pixel-corner-size),
+        100% calc(100% - var(--pixel-corner-size)),
+        calc(100% - var(--pixel-corner-inner)) calc(100% - var(--pixel-corner-size)),
+        calc(100% - var(--pixel-corner-inner)) calc(100% - var(--pixel-corner-inner)),
+        calc(100% - var(--pixel-corner-size)) calc(100% - var(--pixel-corner-inner)),
+        calc(100% - var(--pixel-corner-size)) 100%,
+        var(--pixel-corner-size) 100%,
+        var(--pixel-corner-size) calc(100% - var(--pixel-corner-inner)),
+        var(--pixel-corner-inner) calc(100% - var(--pixel-corner-inner)),
+        var(--pixel-corner-inner) calc(100% - var(--pixel-corner-size)),
+        0px calc(100% - var(--pixel-corner-size))
+    );
 }
 
 /* Start Screen */
@@ -102,7 +127,6 @@ a:hover {
 
 /* Menu */
 .menu-wrapper {
-    background-color: var(--bg-dark);
     margin: 20px;
     display: flex;
     justify-content: center;
@@ -117,7 +141,6 @@ a:hover {
     box-sizing: border-box;
     width: calc(100% - 10px);
     height: fit-content;
-    gap: 80px;
 }
 
 .menu-item {
@@ -164,12 +187,8 @@ a:hover {
     margin-bottom: 20px;
 }
 
-.section-description {
-    background-color: var(--bg-dark);
-    color: var(--text-light);
-    padding: 5px 25px 5px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.content-box.active .section-description {
+    visibility: visible;
 }
 
 .content-box p {
@@ -178,8 +197,51 @@ a:hover {
     border-radius: 5px;
 }
 
+.section-description {
+    visibility: hidden;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 94px;
+    padding: 5px 25px 5px;
+    border-radius: 8px;
+}
+
+.section-description p {
+    background-color: var(--bg-dark);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#popup-container {
+    display: none; /* Initially hidden */
+    background-color: var(--highlight);
+    color: var(--bg-dark);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 35%; /* Adjusted width */
+    height: 80%; /* Adjusted height - taller now */
+    flex-direction: column; /* Stack items vertically */
+    padding: 20px; /* Add some padding */
+    overflow: auto; /*Allows it to scroll*/
+
+}
+
+.popup-inner {
+    border: 2px solid var(--secondary); /* Inner border */
+    padding: 15px; /* Padding inside the inner border */
+    background-color: var(--text-light);
+    height: 100%;
+}
+.popup-inner h2{
+    margin-top: 0;
+    color: var(--secondary);
+}
 
 .profile-container {
+    background-color: var(--bg-dark);
+    padding: 15px;
     width: 200px;
     height: 200px;
     align-self: flex-end;
@@ -210,15 +272,6 @@ a:hover {
     border-radius: 4px;
 }
 
-/* Image Styling */
-.section-description img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 10px auto;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 /* Canvas Styling */
 canvas {
     display: block;
@@ -226,59 +279,6 @@ canvas {
     max-width: 100%;
     height: auto;
     border: 1px solid var(--border);
-}
-
-/* Game Section Styles */
-.game-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-#controls {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-    background-color: #1a1e24;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 800px;
-    box-sizing: border-box;
-}
-
-.control-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-#controls label {
-    color: var(--text-light);
-    font-size: 0.9em;
-    margin-bottom: 2px;
-}
-
-#controls select,
-#controls input,
-#controls button {
-    padding: 5px 10px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    background-color: var(--bg-dark);
-    color: var(--text-light);
-    font-size: 0.85em;
-}
-
-#canvas-container canvas {
-    display: block;
-    margin: 0 auto;
-    max-width: 100%;
-    height: auto;
-    border: 1px solid var(--border);
-    max-width: 800px;
 }
 
 @font-face {
@@ -289,26 +289,4 @@ canvas {
         url("fonts/Daydream.svg") format("svg");
     font-weight: normal;
     font-style: normal;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
-
-    .header-content {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .site-title {
-        font-size: 1.5em;
-    }
-
-    .profile-picture {
-        width: 80px;
-        height: 80px;
-    }
 }
