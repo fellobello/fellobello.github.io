@@ -127,15 +127,18 @@ async function loadAndShowProject(projectKey) {
             const project = data[projectKey];
 
             popupTitle.textContent = project.title;
-            popupText.textContent = project.text;
+            popupText.innerHTML = project.text.replace(/\n\n/g, '<p></p>'); // Handle paragraphs
 
             if (project.images && project.images.length > 0) {
-                const imageContainer = document.createElement('div');
+                const imageContainer = document.createElement('div'); // Create a div
+                imageContainer.classList.add('gif-container'); // Add the gif-container class
+
                 project.images.forEach(imagePath => {
                     const img = document.createElement('img');
                     img.src = imagePath;
                     imageContainer.appendChild(img);
                 });
+
                 popupText.appendChild(imageContainer);
             }
 

@@ -32,7 +32,7 @@ body {
 }
 
 p {
-    white-space: preserve;   
+    white-space: break-spaces;   
 }
 
 a {
@@ -254,19 +254,13 @@ a:hover {
 
 /* GIF Styling */
 .gif-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
     gap: 5px;
     margin-top: 15px;
 }
 
 .gif-container img {
-    max-width: 150px;
-    height: auto;
-    border: 1px solid var(--border);
-    border-radius: 4px;
+    max-width: 100px;
+    max-height: 100px;
 }
 
 /* Canvas Styling */
