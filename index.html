@@ -12,7 +12,6 @@
 </head>
 
 <body>
-
     <div id="start-screen">
         <h1 class="start-title">Steven Cochrane</h1>
         <p class="start-subtitle">-digital portfolio-</p>
@@ -55,14 +54,14 @@
                 <p>This section contains projects. These projects demonstrate integration of mathematical concepts and
                     programming principles. Further data is available on GitHub: <a
                         href="https://github.com/fellobello">GitHub</a>.
-                        <br>
+                    <br>
                     Emphasis has been placed on code clarity and
                     solution efficacy. It is... acceptable.
                 </p>
-                <button id="read-more-projects">Project 1</button>
-                <button id="read-more-projects">Project 2</button>
-                <button id="read-more-projects">Project 3</button>
-                <button id="read-more-projects">Project 4</button>
+                <button class="read-more-project" data-project-key="project1">Project 1</button>
+                <button class="read-more-project" data-project-key="project2">Project 2</button>
+                <button class="read-more-project" data-project-key="project3">Project 3</button>
+                <button class="read-more-project" data-project-key="project4">Project 4</button>
             </div>
         </div>
 
@@ -94,9 +93,8 @@
 
     <div id="popup-container" class="pixel-corners">
         <div class="popup-inner pixel-corners">
-            <h2>Popup Title</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <h2 id="popup-title"></h2>
+            <div id="popup-description"></div>
         </div>
     </div>
 

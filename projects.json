@@ -1,0 +1,22 @@
+{
+    "project1": {
+        "title": "Exploration of 3-State Cellular Automaton",
+        "text": "The project began with the creation of a 3-state cellular automaton, quickly confronting the vast number of rule possibilities, in the order of 3^2187. Recognizing the impracticality of manual analysis due to the predominance of noise, an automated approach was adopted. After developing a way to encode my states and rules into different counting systems (base n where n is the number of states), a Java application was developed for mass data collection, simulating thousands of rule sets with a heuristic to discern patterns of behavior. Initial data analysis revealed two distinct groups based on the stability of patterns, guiding the next steps of the investigation.\n\nBelow are examples of stable structures observed in the simulations, showcasing the complexity and beauty of patterns that can emerge from simple rules. In the [GitHub Repository](https://github.com/fellobello/3state-automata) there are more example rule sets.\n\nData encoding and optimization were crucial for making the dataset manageable and intelligible for neural network analysis. Following data normalization and careful selection of neural network architecture tailored to our data features, the network was trained to identify rule sets leading to stable structures. Despite efforts, creating effective rules based on neural network outputs proved challenging due to inherent limitations in capturing specific rule restrictions. The network was instead used to evaluate hundreds of rule sets, assigning scores to gauge stability. While achieving scores above .45 was rare, a significant concentration of scores around 0.8 was noted in our data analysis, presenting an elusive high-score group amidst a vast possibility space.\n\nThe simulation running on this page uses a subset of 100 out of the possible 243 rules to avoid overwhelming chaos, allowing for clearer observation of emergent patterns. Notably, these simulations are less chaotic than those used in our examples, which all have over 200 rules. Clicking the \"Restart\" button reinitializes the board with new rules and random states for each cell, enabling exploration of the wide array of possibilities within a more controlled chaos.",
+        "images": ["images/Figure_1.png", "images/rules_0.gif", "images/rules_10.gif", "images/rules_x.gif", "images/rules_y.gif"]
+    },
+    "project2": {
+        "title": "Brownian Motion",
+        "text": "This simulation illustrates Brownian motion, focusing on the unpredictable movement of particles.",
+        "images": []
+    },
+    "project3": {
+        "title": "Conway's Game of Life",
+        "text": "This project adapts Conway's Game of Life to a hexagonal grid, offering a twist on the classic by using p5.js. The change to hexagons introduces new patterns and behaviors, highlighting the game's inherent complexity. The challenge lay in recalculating connections between cells, yet the outcome shows how simple rule modifications can unveil significant differences. My interest here lies in the game's potential for complexity, inspiring thoughts on its application for computational solutions.",
+        "images": []
+    },
+    "project4": {
+        "title": "Path Finder",
+        "text": "The project employs a greedy best-first algorithm to navigate mazes, chosen for its efficiency in speed versus memory use. This approach simulates real-time problem-solving, offering insights into algorithmic efficiency and heuristic applications. The balance between speed and resource utilization reflects my preference for practical, effective solutions in computational tasks. The challenge of navigating through mazes in Javascript without guaranteed exits provided valuable lessons in algorithmic adaptation.",
+        "images": []
+    }
+}

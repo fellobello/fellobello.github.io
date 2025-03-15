@@ -32,7 +32,7 @@ body {
 }
 
 p {
-    white-space: preserve;    
+    white-space: preserve;   
 }
 
 a {
@@ -213,26 +213,23 @@ a:hover {
 }
 
 #popup-container {
-    display: none; /* Initially hidden */
+    display: none;
     background-color: var(--highlight);
     color: var(--bg-dark);
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 35%; /* Adjusted width */
-    height: 80%; /* Adjusted height - taller now */
-    flex-direction: column; /* Stack items vertically */
-    padding: 20px; /* Add some padding */
-    overflow: auto; /*Allows it to scroll*/
-
-}
+    top: 20px; 
+    left: 20px;
+    width: 565px;
+    height: calc(100vh - 40px);
+    padding: 20px;
+  }
 
 .popup-inner {
     border: 2px solid var(--secondary); /* Inner border */
     padding: 15px; /* Padding inside the inner border */
     background-color: var(--text-light);
     height: 100%;
+    overflow: auto;
 }
 .popup-inner h2{
     margin-top: 0;
