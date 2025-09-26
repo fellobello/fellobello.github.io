@@ -1,109 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-
+  
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Steven Cochrane - Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>steven cochrane - portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div id="start-screen">
-        <h1 class="start-title">Steven Cochrane</h1>
-        <p class="start-subtitle">-digital portfolio-</p>
-        <p id="press-start" class="start-text">PRESS ANY KEY</p>
-    </div>
+  <div id="start-screen" class="pixel-corners start-screen">
+    <h1 class="start-title">steven cochrane</h1>
+    <p class="start-subtitle">-digital portfolio-</p>
+    <p id="press-start" class="start-text">press any key</p>
+  </div>
 
-    <div class="menu-wrapper pixel-corners">
-        <div class="menu-container pixel-corners">
-            <div class="menu-item selected pixel-corners" data-index="0">
-                <span class="arrow">></span> WHO ARE YOU??
-            </div>
-            <div class="menu-item pixel-corners" data-index="1">
-                <span class="arrow"></span> WHAT DO YOU DO?
-            </div>
-            <div class="menu-item pixel-corners" data-index="2">
-                <span class="arrow"></span> WHAT IS YOUR GOAL?
-            </div>
-            <div class="menu-item pixel-corners" data-index="3">
-                <span class="arrow"></span> I HAVE A QUESTION..
-            </div>
-        </div>
-    </div>
-
+  <div class="main-wrapper pixel-corners">
+    <nav class="menu-wrapper">
+      <button class="menu-item selected" data-index="0">who are you??</button>
+      <button class="menu-item" data-index="1">what do you do?</button>
+      <button class="menu-item" data-index="2">what is your goal?</button>
+      <button class="menu-item" data-index="3">i have a question..</button>
+    </nav>
     <div class="content-container">
-        <div class="content-box active" data-content-index="0">
-            <div class="section-description pixel-corners">
-              <p>Designation: Steven Cochrane. I am a computer science graduate. Areas of proficiency include mathematics and programming. My experiences encompass exploration of music, artistic endeavors, and game development. These activities appear to stimulate creativity. Primary objective: problem-solving and continuous acquisition of knowledge.
-              
-                Location: Phoenix, Arizona. Interests are... varied. I maintain an active lifestyle. This is beneficial.
-              </p>
-            </div>
-          </div>
-          
-          <div class="content-box" data-content-index="1">
-            <div class="section-description pixel-corners">
-              <p>This section contains projects. These projects demonstrate integration of mathematical concepts and programming principles. Further data is available on GitHub:
-                <a href="https://github.com/fellobello">GitHub</a>.
-
-                Emphasis has been placed on code clarity and solution efficacy. It is... acceptable.
-              </p>
-              <div class="selection-container">
-                <div class="read-more-project pixel-corners" data-project-key="project1">
-                  Project 1
-                </div>
-                <div class="read-more-project pixel-corners" data-project-key="project2">
-                  Project 2
-                </div>
-                <div class="read-more-project pixel-corners" data-project-key="project3">
-                  Project 3
-                </div>
-                <div class="read-more-project pixel-corners" data-project-key="project4">
-                  Project 4
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="content-box" data-content-index="2">
-            <div class="section-description pixel-corners">
-              <p>
-                Proficiencies include: Java, Python, HTML/CSS/JavaScript, C#, and x86 Assembly. I possess skills in algorithm design. My foundational knowledge base includes: Set Theory, Statistics, Linear Algebra, and Calculus.
-
-                Current interests: quantum and analogue computing, cellular automata (a curious phenomenon), data analysis, and game theory. Collaboration on impactful projects is desired.
-              </p>
-            </div>
-          </div>
-          
-          <div class="content-box" data-content-index="3">
-            <div class="section-description pixel-corners">
-              <p>Inquiries, proposals, or collaborative opportunities are welcome.
-
-                Communication methods: Email at
-                <a href="mailto:cochranesteven137@gmail.com">cochranesteven137@gmail.com</a>,
-                or via GitHub: <a href="https://github.com/fellobello">GitHub</a>.
-              </p>
-            </div>
-          </div>
-        <div class="profile-container pixel-corners">
-            <img src="profilePic2.png" alt="Profile Picture" class="profile-picture pixel-corners" />
+      <section class="content-box active" data-content-index="0">
+        <div class="section-description pixel-corners" id="msg-container-0"></div>
+      </section>
+      <section class="content-box" data-content-index="1">
+        <div class="section-description pixel-corners" id="msg-container-1"></div>
+        <div class="selection-container" id="project-buttons">
+          <button class="read-more-project" data-project-key="project1">stable 3-state ca</button>
+          <button class="read-more-project" data-project-key="project2">hex conway</button>
+          <button class="read-more-project" data-project-key="project3">tsnes</button>
+          <button class="read-more-project" data-project-key="project4">bookstore</button>
         </div>
+      </section>
+      <section class="content-box" data-content-index="2">
+        <div class="section-description pixel-corners" id="msg-container-2"></div>
+      </section>
+      <section class="content-box" data-content-index="3">
+        <div class="section-description pixel-corners" id="msg-container-3"></div>
+      </section>
+      <div class="profile-container pixel-corners">
+        <img src="profilePic2.png" alt="steven cochrane profile photo" class="profile-picture pixel-corners" />
+      </div>
     </div>
+  </div>
 
-    <div id="popup-container" class="pixel-corners">
-        <div class="popup-inner pixel-corners">
-            <h2 id="popup-title"></h2>
-            <div id="popup-description"></div>
-            <h2 style="text-align: center; color: var(--border); cursor: pointer; margin: bottom 0;"> X- PRESS ANYWHERE TO EXIT -X  </h2>
-        </div>
+  <div id="popup-overlay" class="popup-overlay" style="display:none;"></div>
+  <div id="popup-container" class="pixel-corners">
+    <div class="popup-inner pixel-corners">
+      <button class="popup-close" aria-label="close popup">x</button>
+      <h2 id="popup-title"></h2>
+      <div id="popup-description"></div>
     </div>
+  </div>
 
-    <script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
 
 </html>

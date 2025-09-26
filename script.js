@@ -1,246 +1,202 @@
-// --- DOM Elements ---
-const startScreen = document.getElementById('start-screen');
-const menuWrapper = document.querySelector('.menu-wrapper');
-const contentContainer = document.querySelector('.content-container');
-const menuItems = document.querySelectorAll('.menu-item');
-const contentBoxes = document.querySelectorAll('.content-box');
-const pressStart = document.getElementById('press-start');
-const popupContainer = document.getElementById('popup-container');
-const popupTitle = document.getElementById('popup-title');
-const popupText = document.getElementById('popup-description');
-const projectButtons = document.querySelectorAll('.read-more-project');
-
-// --- State Variables ---
-let selectedIndex = 0;
-let gameStarted = false;
-let currentTypewriterAbort = false;
-let timeoutId;
-let currentTypewriterPromise;
-let isNavigatingProjects = false;
-let selectedProjectIndex = 0;
-
-// --- Utility Functions ---
-
-/**
- * Types out text in an element with a typewriter effect.
- *
- * @param {HTMLElement} element - The element to type into.
- * @param {string} text - The text to type.
- * @param {number} [delay=15] - The delay between characters in milliseconds.
- * @returns {Promise<void>}
- */
-async function typeWriter(element, text, delay = 15) {
-    element.innerHTML = '';
+const messages = [
+    [
+      "Designation:\n Steven Cochrane.",
+      "I am a computer science graduate. areas of proficiency include mathematics and programming.",
+      "My experiences encompass exploration of music, artistic endeavors, and game development. these activities stimulate creativity.",
+      "Primary objective: problem-solving and continuous acquisition of knowledge.",
+      "Location: phoenix, arizona. interests are varied. i maintain an active lifestyle. this is beneficial."
+    ],
+    [
+      "these projects demonstrate integration of mathematical concepts and programming principles.",
+      "further data is available on github: github.",
+      "emphasis has been placed on code clarity and solution efficacy. it is... acceptable."
+    ],
+    [
+      "proficiencies: java, python, html/css/javascript, c#, x86 assembly.",
+      "skills: algorithm design, and a knowledge base including set theory, statistics, linear algebra, calculus.",
+      "current interests: quantum and analogue computing, cellular automata, data analysis, game theory.",
+      "interested in collaboration on impactful projects."
+    ],
+    [
+      "inquiries, proposals, or collaborative opportunities are welcome.",
+      "email: cochranesteven137@gmail.com",
+      "github: github.com/fellobello"
+    ]
+  ];
+  const startScreen = document.getElementById('start-screen');
+  const mainWrapper = document.querySelector('.main-wrapper');
+  const menuItems = document.querySelectorAll('.menu-item');
+  const contentBoxes = document.querySelectorAll('.content-box');
+  const pressStart = document.getElementById('press-start');
+  const projectButtons = document.querySelectorAll('.read-more-project');
+  const popupContainer = document.getElementById('popup-container');
+  const popupOverlay = document.getElementById('popup-overlay');
+  const popupTitle = document.getElementById('popup-title');
+  const popupText = document.getElementById('popup-description');
+  const popupClose = document.querySelector('.popup-close');
+  
+  let selectedIndex = 0;
+  let gameStarted = false;
+  let isNavigatingProjects = false;
+  let selectedProjectIndex = 0;
+  let currentTypewriterAbort = false;
+  let currentTypewriterPromise = null;
+  let timeoutId = null;
+  
+  // typewriter for one bubble
+  async function typeWriter(element, text, delay = 15) {
+    element.textContent = '';
+    element.classList.add('visible');
     currentTypewriterAbort = false;
-    let writtenText = '';
-
     for (let i = 0; i < text.length; i++) {
-        if (currentTypewriterAbort) {
-            element.innerHTML = writtenText + text.substring(i);
-            return;
-        }
-        writtenText += text.charAt(i);
-        element.innerHTML += text.charAt(i);
-        await new Promise(resolve => setTimeout(resolve, delay));
+      if (currentTypewriterAbort) {
+        element.textContent = text;
+        return;
+      }
+      element.textContent += text[i];
+      await new Promise(resolve => setTimeout(resolve, delay));
     }
-}
-
-/**
- * Shows the content box at the given index with a typewriter effect.
- *
- * @param {number} index - The index of the content box to show.
- */
-function showContent(index) {
-    if (timeoutId) {
-        clearTimeout(timeoutId);
+  }
+  
+  // render msg bubbles for active section
+  async function showMessages(index) {
+    const msgContainer = document.getElementById('msg-container-' + index);
+    msgContainer.innerHTML = '';
+    for (let i = 0; i < messages[index].length; i++) {
+      const bubble = document.createElement('div');
+      bubble.className = 'msg-bubble';
+      msgContainer.appendChild(bubble);
+      await typeWriter(bubble, messages[index][i]);
     }
-
-    timeoutId = setTimeout(async () => {
-        contentBoxes.forEach(box => box.classList.remove('active'));
-        const activeBox = contentBoxes[index];
-        activeBox.classList.add('active');
-
-        const sectionDescription = activeBox.querySelector('.section-description');
-        const paragraphs = sectionDescription.querySelectorAll('p');
-
-        for (const paragraph of paragraphs) {
-            currentTypewriterAbort = true;
-            if (currentTypewriterPromise) {
-                await currentTypewriterPromise;
-            }
-            currentTypewriterPromise = typeWriter(paragraph, paragraph.textContent);
-            await currentTypewriterPromise;
-        }
-        timeoutId = null;
-    }, 500);
-}
-
-/**
- * Selects the menu item at the given index and updates the UI.
- *
- * @param {number} index - The index of the menu item to select.
- */
-function selectMenuItem(index) {
+    // for section 1 (projects), ensure project buttons are visible
+    if (index === 1) {
+      document.getElementById('project-buttons').style.display = 'flex';
+    } else {
+      document.getElementById('project-buttons').style.display = 'none';
+    }
+  }
+  
+  function showContent(index) {
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      contentBoxes.forEach(box => box.classList.remove('active'));
+      contentBoxes[index].classList.add('active');
+      showMessages(index);
+      timeoutId = null;
+    }, 150);
+  }
+  
+  function selectMenuItem(index) {
     menuItems.forEach((item, i) => {
-        const arrow = item.querySelector('.arrow');
-        if (i === index) {
-            item.classList.add('selected');
-            arrow.textContent = '>';
-        } else {
-            item.classList.remove('selected');
-            arrow.textContent = '';
-        }
+      if (i === index) {
+        item.classList.add('selected');
+      } else {
+        item.classList.remove('selected');
+      }
     });
     selectedIndex = index;
     showContent(index);
     resetProjectButtonSelection();
     isNavigatingProjects = false;
-}
-
-/**
- * Starts the game by hiding the start screen and showing the menu and content.
- */
-function startGame() {
+  }
+  
+  function startGame() {
     if (gameStarted) return;
     gameStarted = true;
     startScreen.style.display = 'none';
-    menuWrapper.style.display = 'flex';
-    contentContainer.style.display = 'flex';
+    mainWrapper.style.display = 'flex';
     selectMenuItem(selectedIndex);
-}
-
-/**
- * Flashes the "Press Start" text.
- */
-function flashPressStart() {
+  }
+  
+  function flashPressStart() {
     pressStart.style.opacity = (pressStart.style.opacity === '0' || pressStart.style.opacity === '') ? '1' : '0';
-}
-
-/**
- * Fetches project data from JSON and populates the popup.
- *
- * @param {string} projectKey - The key of the project in the JSON file.
- */
-async function loadAndShowProject(projectKey) {
-    try {
-        const response = await fetch('projects.json');
-        const data = await response.json();
-
-        if (data[projectKey]) {
-            const project = data[projectKey];
-
-            popupTitle.textContent = project.title;
-            popupText.innerHTML = project.text.replace(/\n\n/g, '<p></p>');
-
-            if (project.images && project.images.length > 0) {
-                const imageContainer = document.createElement('div');
-                imageContainer.classList.add('gif-container');
-
-                project.images.forEach(imagePath => {
-                    const img = document.createElement('img');
-                    img.src = imagePath;
-                    imageContainer.appendChild(img);
-                });
-
-                popupText.appendChild(imageContainer);
-            }
-
-            popupContainer.style.display = 'block';
-        } else {
-            console.error('Project not found:', projectKey);
-            alert('Project details not found.');
-        }
-    } catch (error) {
-        console.error('Error loading project data:', error);
-        alert('Error loading project details.');
-    }
-}
-
-/**
- * Selects a project button.
- *
- * @param {number} index - The index of the project button to select.
- */
-function selectProjectButton(index) {
+  }
+  
+  function selectProjectButton(index) {
     projectButtons.forEach((button, i) => {
-        if (i === index) {
-            button.classList.add('selected');
-        } else {
-            button.classList.remove('selected');
-        }
+      if (i === index) {
+        button.classList.add('selected');
+      } else {
+        button.classList.remove('selected');
+      }
     });
     selectedProjectIndex = index;
-}
-
-/**
- * Resets the selection of project buttons.
- */
-function resetProjectButtonSelection() {
+  }
+  
+  function resetProjectButtonSelection() {
     projectButtons.forEach(button => button.classList.remove('selected'));
     selectedProjectIndex = 0;
-}
-
-// --- Event Listeners ---
-
-menuItems.forEach((item, index) => {
+  }
+  
+  menuItems.forEach((item, index) => {
     item.addEventListener('click', () => {
-        if (gameStarted) {
-            selectMenuItem(index);
-        }
+      if (gameStarted) selectMenuItem(index);
     });
-});
-
-document.addEventListener('keydown', event => {
+  });
+  
+  // main keyboard navigation
+  // space -- scroll section-description smoothly 50px per press
+  // only if the message container is scrollable
+  
+  document.addEventListener('keydown', event => {
     if (!gameStarted) {
-        startGame();
+      startGame();
     } else {
-        if (isNavigatingProjects) {
-            const projectCount = projectButtons.length;
-            if (event.key === 'ArrowRight' || event.key.toLowerCase() === 'd') {
-                selectedProjectIndex = (selectedProjectIndex + 1) % projectCount;
-                selectProjectButton(selectedProjectIndex);
-            } else if ((event.key === 'ArrowLeft' || event.key.toLowerCase() === 'a') && selectedProjectIndex === 0) {
-                isNavigatingProjects = false;
-                resetProjectButtonSelection();
-            } else if (event.key === 'ArrowLeft' || event.key.toLowerCase() === 'a') {
-                selectedProjectIndex = (selectedProjectIndex - 1 + projectCount) % projectCount;
-                selectProjectButton(selectedProjectIndex);
-            } else if (event.key === ' ') {
-                const selectedButton = projectButtons[selectedProjectIndex];
-                if (selectedButton) {
-                    selectedButton.click();
-                }
-            }
-        } else {
-            const menuCount = menuItems.length;
-            if (event.key === 'ArrowDown' || event.key.toLowerCase() === 's') {
-                selectedIndex = (selectedIndex + 1) % menuCount;
-                selectMenuItem(selectedIndex);
-            } else if (event.key === 'ArrowUp' || event.key.toLowerCase() === 'w') {
-                selectedIndex = (selectedIndex - 1 + menuCount) % menuCount;
-                selectMenuItem(selectedIndex);
-            } else if ((event.key === 'ArrowRight' || event.key.toLowerCase() === 'd') && selectedIndex === 1) {
-                isNavigatingProjects = true;
-                selectProjectButton(selectedProjectIndex);
-            }
+      if (event.key === ' ') {
+        event.preventDefault();
+        const msgBox = document.getElementById('msg-container-' + selectedIndex);
+        if (msgBox) {
+          msgBox.scrollBy({ top: 50, behavior: 'smooth' });
         }
+        return;
+      }
+      if (isNavigatingProjects) {
+        const projectCount = projectButtons.length;
+        if (event.key === 'ArrowRight' || event.key.toLowerCase() === 'd') {
+          selectedProjectIndex = (selectedProjectIndex + 1) % projectCount;
+          selectProjectButton(selectedProjectIndex);
+        } else if ((event.key === 'ArrowLeft' || event.key.toLowerCase() === 'a') && selectedProjectIndex === 0) {
+          isNavigatingProjects = false;
+          resetProjectButtonSelection();
+        } else if (event.key === 'ArrowLeft' || event.key.toLowerCase() === 'a') {
+          selectedProjectIndex = (selectedProjectIndex - 1 + projectCount) % projectCount;
+          selectProjectButton(selectedProjectIndex);
+        } else if (event.key === ' ') {
+          const selectedButton = projectButtons[selectedProjectIndex];
+          if (selectedButton) selectedButton.click();
+        }
+      } else {
+        const menuCount = menuItems.length;
+        if (event.key === 'ArrowDown' || event.key.toLowerCase() === 's') {
+          selectedIndex = (selectedIndex + 1) % menuCount;
+          selectMenuItem(selectedIndex);
+        } else if (event.key === 'ArrowUp' || event.key.toLowerCase() === 'w') {
+          selectedIndex = (selectedIndex - 1 + menuCount) % menuCount;
+          selectMenuItem(selectedIndex);
+        } else if ((event.key === 'ArrowRight' || event.key.toLowerCase() === 'd') && selectedIndex === 1) {
+          isNavigatingProjects = true;
+          selectProjectButton(selectedProjectIndex);
+        }
+      }
     }
-});
-
-popupContainer.addEventListener('click', () => {
+  });
+  
+  popupClose.addEventListener('click', () => {
     popupContainer.style.display = 'none';
-});
-
-projectButtons.forEach(button => {
+    popupOverlay.style.display = 'none';
+  });
+  popupContainer.addEventListener('click', e => {
+    if (e.target === popupContainer) {
+      popupContainer.style.display = 'none';
+      popupOverlay.style.display = 'none';
+    }
+  });
+  projectButtons.forEach(button => {
     button.addEventListener('click', function() {
-        const projectKey = this.dataset.projectKey;
-        loadAndShowProject(projectKey);
+      // ...project display/loading function...
     });
-});
-
-// --- Initialization ---
-
-menuWrapper.style.display = 'none';
-contentContainer.style.display = 'none';
-
-setInterval(flashPressStart, 500);
+  });
+  
+  mainWrapper.style.display = 'none';
+  setInterval(flashPressStart, 500);
+  
