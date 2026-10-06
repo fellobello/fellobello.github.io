@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Webcam Hand Tracking · Steven Cochrane</title>
-  <meta name="description" content="Real-time webcam hand tracking in C++23, reading frames straight from Linux V4L2.">
+  <title>Webcam Vision Pipeline · Steven Cochrane</title>
+  <meta name="description" content="A webcam vision pipeline in C++23, written from the Linux camera driver up.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
@@ -24,12 +24,12 @@
 
   <main class="wrap">
     <p class="back"><a href="../#projects">← All projects</a></p>
-    <span class="status">2025</span>
-    <h1>Real-time webcam hand tracking</h1>
-    <p class="meta">A C++ program that finds hands in a live webcam feed, with every step from the camera driver to the bounding boxes written by hand.</p>
+    <span class="status wip">In progress</span>
+    <h1>Webcam vision pipeline from scratch</h1>
+    <p class="meta">A C++ webcam pipeline with every step, from the camera driver to the bounding boxes, written by hand. The goal is hand and gesture tracking; the pipeline works, and hand detection is next.</p>
 
     <dl class="facts">
-      <dt>When</dt><dd>2025</dd>
+      <dt>When</dt><dd>2025 – present</dd>
       <dt>Stack</dt><dd>C++23, Linux V4L2, CMake. OpenCV is used only to put frames on screen.</dd>
       <dt>Code</dt><dd><a href="https://github.com/fellobello/gesture_capture">github.com/fellobello/gesture_capture</a></dd>
     </dl>
@@ -60,11 +60,13 @@
     </ol>
     <p>Keyboard shortcuts switch between the color, grayscale and skin-mask views.</p>
 
-    <h2>What I'd do next</h2>
-    <ul>
+    <h2>Where it's going</h2>
+    <ol>
+      <li>Find hands with the skin mask (boxes currently come from a brightness mask), filtered by blob area and shape.</li>
+      <li>Count raised fingers from each hand's outline with a convex hull, without needing training data.</li>
+      <li>Track hands across frames and recognize simple gestures from finger count and motion.</li>
       <li>Swap the blur for a running-sum version so its cost doesn't depend on the kernel size.</li>
-      <li>Track blobs across frames and recognize simple gestures from their motion.</li>
-    </ul>
+    </ol>
   </main>
 
   <footer class="site-footer">
