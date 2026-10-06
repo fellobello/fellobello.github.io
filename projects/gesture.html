@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Webcam Hand Tracking · Steven Cochrane</title>
+  <meta name="description" content="Real-time webcam hand tracking in C++23, reading frames straight from Linux V4L2.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="name" href="../">Steven Cochrane</a>
+      <nav>
+        <a href="../#projects">Projects</a>
+        <a href="../#skills">Skills</a>
+        <a href="../#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="back"><a href="../#projects">← All projects</a></p>
+    <span class="status">2025</span>
+    <h1>Real-time webcam hand tracking</h1>
+    <p class="meta">A C++ program that finds hands in a live webcam feed, with every step from the camera driver to the bounding boxes written by hand.</p>
+
+    <dl class="facts">
+      <dt>When</dt><dd>2025</dd>
+      <dt>Stack</dt><dd>C++23, Linux V4L2, CMake. OpenCV is used only to put frames on screen.</dd>
+      <dt>Code</dt><dd><a href="https://github.com/fellobello/gesture_capture">github.com/fellobello/gesture_capture</a></dd>
+    </dl>
+
+    <!-- TODO (Steven): a screenshot or short GIF of the three views would help a lot here. -->
+
+    <h2>Why no libraries</h2>
+    <p>
+      The point was to understand what a vision library does for you. The only outside code
+      shows the window; capture, color conversion and every image operation are my own.
+    </p>
+
+    <h2>How it works</h2>
+    <h3>Talking to the camera driver</h3>
+    <p>
+      Frames come straight from the Linux kernel's V4L2 API: open <code>/dev/video0</code>,
+      negotiate a YUYV format with <code>ioctl</code>, request buffers, <code>mmap</code> them
+      into the process, then queue and dequeue them each frame. YUYV is converted to RGB with
+      fixed-point integer math (the standard BT.601 coefficients, scaled and shifted) instead of
+      floating point.
+    </p>
+    <h3>The per-frame pipeline</h3>
+    <ol>
+      <li><strong>Blur.</strong> A separable box blur: one horizontal pass, one vertical, so each pixel costs 2k reads instead of k².</li>
+      <li><strong>Skin mask.</strong> Convert to HSV and keep pixels inside two hue ranges with minimum saturation and brightness.</li>
+      <li><strong>Threshold</strong> a grayscale copy into a binary mask.</li>
+      <li><strong>Group pixels.</strong> A breadth-first flood fill walks each connected blob and records its bounding box, which is drawn back onto the color frame.</li>
+    </ol>
+    <p>Keyboard shortcuts switch between the color, grayscale and skin-mask views.</p>
+
+    <h2>What I'd do next</h2>
+    <ul>
+      <li>Swap the blur for a running-sum version so its cost doesn't depend on the kernel size.</li>
+      <li>Track blobs across frames and recognize simple gestures from their motion.</li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><a href="../">← Back to home</a></div>
+  </footer>
+</body>
+</html>
