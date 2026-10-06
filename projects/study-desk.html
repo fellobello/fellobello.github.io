@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Study Desk · Steven Cochrane</title>
+  <meta name="description" content="Study Desk: a free, offline flashcard study app built with plain HTML, CSS and JavaScript.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="name" href="../">Steven Cochrane</a>
+      <nav>
+        <a href="../#projects">Projects</a>
+        <a href="../#skills">Skills</a>
+        <a href="../#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="back"><a href="../#projects">← All projects</a></p>
+    <span class="status">Live</span>
+    <h1>Study Desk</h1>
+    <p class="meta">A free, offline flashcard app I built for studying, with decks you edit as a spreadsheet.</p>
+
+    <dl class="facts">
+      <dt>When</dt><dd>2026</dd>
+      <dt>Stack</dt><dd>HTML, CSS, JavaScript (no frameworks or dependencies), Python 3 for the local server</dd>
+      <dt>Try it</dt><dd><a href="https://fellobello.github.io/flashcard-study-app/">fellobello.github.io/flashcard-study-app</a></dd>
+      <dt>Code</dt><dd><a href="https://github.com/fellobello/flashcard-study-app">github.com/fellobello/flashcard-study-app</a> (MIT license)</dd>
+    </dl>
+
+    <figure>
+      <img src="../assets/img/study-desk.png" alt="Study Desk start screen showing four study modes, difficulty, section picker and a focus timer" loading="lazy">
+      <figcaption>The start screen: pick a mode, a difficulty and which cards to study.</figcaption>
+    </figure>
+
+    <h2>Why I built it</h2>
+    <!-- TODO (Steven): rewrite this in your own words. Why did you build it instead of using Quizlet/Anki? -->
+    <p>
+      I needed to study a 242-card deck for my CSE 445 (distributed software development)
+      midterm and wanted cards I could edit in a spreadsheet, with no account. Everything runs
+      from one folder, works offline and opens by double-clicking.
+    </p>
+
+    <h2>What it does</h2>
+    <ul>
+      <li><strong>Four study modes:</strong> flashcards, multiple choice, matching, and a timed true/false speed round.</li>
+      <li><strong>Three difficulty levels</strong> that change time limits, answer choices, lives and scoring.</li>
+      <li><strong>CSV decks:</strong> each card has a section, tags, a term, a definition and an optional example.</li>
+      <li><strong>Progress tracking:</strong> got-it and study-again marks, starred cards and best scores.</li>
+      <li><strong>Pomodoro focus timer</strong> that keeps running between games, and export to Quizlet or Anki.</li>
+    </ul>
+
+    <h2>Interesting parts</h2>
+    <h3>Choosing cards with set operations</h3>
+    <p>
+      Sections, tags and piles (like "study again") each work as a set. Clicking a name
+      intersects it with the current selection, <code>+</code> adds its cards and
+      <code>−</code> subtracts them, so the deck you study is
+      <em>(selected items, intersected) + added − subtracted</em>. The picker shows that
+      formula and the resulting card count as you build it.
+    </p>
+    <h3>Saving progress without a backend</h3>
+    <p>
+      Opened straight from disk, the app saves progress in the browser. Run through the
+      small Python server instead (it only listens on <code>127.0.0.1</code>), and progress
+      is written to a <code>progress.json</code> file next to the deck, so it survives clearing
+      the browser and can be copied between machines. The server also regenerates a built-in
+      copy of the deck whenever <code>cards.csv</code> changes, so the app still works when
+      opened as a plain file.
+    </p>
+
+    <!-- Optional next sections:
+    <h2>What I'd do next</h2>
+    <h2>What I learned</h2>
+    -->
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><a href="../">← Back to home</a></div>
+  </footer>
+</body>
+</html>

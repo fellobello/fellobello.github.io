@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monocle · Steven Cochrane</title>
+  <meta name="description" content="Monocle: an early-stage personal data-transparency service.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="name" href="../">Steven Cochrane</a>
+      <nav>
+        <a href="../#projects">Projects</a>
+        <a href="../#skills">Skills</a>
+        <a href="../#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="back"><a href="../#projects">← All projects</a></p>
+    <span class="status wip">In progress</span>
+    <h1>Monocle</h1>
+    <p class="meta">An early-stage service that tells people where their personal details appear online, and helps get them removed.</p>
+
+    <dl class="facts">
+      <dt>When</dt><dd>2026 – present</dd>
+      <dt>Status</dt><dd>Runs end to end locally on fake data. Not deployed.</dd>
+      <dt>Stack</dt><dd>PostgreSQL, Python, TypeScript (Fastify, Next.js), Redis, Docker Compose</dd>
+      <dt>Code</dt><dd>Private for now</dd>
+    </dl>
+
+    <h2>The idea</h2>
+    <p>
+      Data brokers and breaches spread people's names, addresses and phone numbers around.
+      Monocle lets you check what's out there about you, but only confirms things to you once
+      you've proven they're yours, so the tool can't be used to look other people up.
+    </p>
+
+    <h2>Design rules I'm building around</h2>
+    <ul>
+      <li><strong>Confirm, don't reveal.</strong> Answers get more detailed only as you prove more about who you are.</li>
+      <li><strong>Deletion is real.</strong> Removing your data deletes it and adds you to a suppression list, so it can't be re-imported later.</li>
+      <li><strong>Personal data is encrypted at rest</strong>, and the audit log is tamper-evident.</li>
+    </ul>
+
+    <h2>How it's put together</h2>
+    <p>
+      Three separate PostgreSQL databases, a Python ingest pipeline that normalizes and
+      de-duplicates records, and an API with a background worker. Everything runs locally in
+      Docker with stand-ins for the cloud services it would use in production.
+    </p>
+
+    <p class="todo">
+      This page is a placeholder while the project is early. Add screenshots, a diagram and
+      what you've learned as it takes shape.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><a href="../">← Back to home</a></div>
+  </footer>
+</body>
+</html>

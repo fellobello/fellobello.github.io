@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Steven Cochrane</title>
+  <meta name="description" content="Steven Cochrane: computer science student at Arizona State University. Projects in systems, self-hosting, data and software.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="name" href="./">Steven Cochrane</a>
+      <nav>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <h1>Steven Cochrane</h1>
+      <p class="lede">
+        Computer Science student at Arizona State University (graduating May 2027), based in
+        San Luis Obispo, CA. I like systems that are simple, well organized and easy to rebuild,
+        and I'm happiest when there's some math in the problem.
+      </p>
+      <ul class="links">
+        <li><a href="https://github.com/fellobello">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/steven-cochrane-531a6332a">LinkedIn</a></li>
+        <li><a href="mailto:scochrane02@gmail.com">scochrane02@gmail.com</a></li>
+        <!-- Optional: add a resume PDF to assets/ and link it here.
+             Remove your phone number from the public copy first. -->
+      </ul>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <ul class="cards">
+        <li class="card">
+          <span class="status">Live</span>
+          <h3><a href="projects/study-desk.html">Study Desk</a></h3>
+          <p>An offline flashcard app with four quiz modes, CSV decks and progress tracking. No install, no account, no dependencies.</p>
+          <ul class="tags"><li>HTML/CSS</li><li>JavaScript</li><li>Python</li></ul>
+          <a class="more" href="projects/study-desk.html">Read more →</a>
+        </li>
+
+        <li class="card">
+          <span class="status">Running since 2024</span>
+          <h3><a href="projects/home-server.html">Self-hosted home server</a></h3>
+          <p>An old ThinkPad turned into a headless Ubuntu server: Docker services, a two-tier network with zero open router ports, and nightly backups.</p>
+          <ul class="tags"><li>Linux</li><li>Docker</li><li>Tailscale</li><li>Caddy</li><li>Bash</li></ul>
+          <a class="more" href="projects/home-server.html">Read more →</a>
+        </li>
+
+        <li class="card">
+          <span class="status">2026</span>
+          <h3><a href="projects/digiclips.html">DigiClips media search</a></h3>
+          <p>Capstone Scrum team work on a real company's media-monitoring platform: privacy and search bug fixes with automated tests.</p>
+          <ul class="tags"><li>REST API</li><li>MySQL</li><li>Testing</li></ul>
+          <a class="more" href="projects/digiclips.html">Read more →</a>
+        </li>
+
+        <li class="card">
+          <span class="status wip">In progress</span>
+          <h3><a href="projects/monocle.html">Monocle</a></h3>
+          <p>An early-stage personal data-transparency service: find out where your details appear, confirmed only to you, and get them removed.</p>
+          <ul class="tags"><li>PostgreSQL</li><li>Python</li><li>Docker</li><li>TypeScript</li></ul>
+          <a class="more" href="projects/monocle.html">Read more →</a>
+        </li>
+      </ul>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <dl class="skills">
+        <dt>Languages</dt><dd>C++, Java, Python, SQL (MySQL, PostgreSQL), Bash</dd>
+        <dt>Systems</dt><dd>Linux (Ubuntu Server), macOS, Windows; computer architecture, OS internals, hardware troubleshooting</dd>
+        <dt>Infrastructure</dt><dd>Docker &amp; Compose, systemd, Tailscale, WireGuard, Caddy, TLS, SSH, ufw</dd>
+        <dt>Data</dt><dd>SQL, Excel, linear regression, decision trees</dd>
+        <dt>Practices</dt><dd>Git &amp; GitHub, automated testing, Agile / Scrum, AI-assisted development</dd>
+      </dl>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>
+        I'm looking for part-time, internship or entry-level work in data, IT/systems or software,
+        remote or around San Luis Obispo. Email
+        <a href="mailto:scochrane02@gmail.com">scochrane02@gmail.com</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">Built with plain HTML and CSS. Source on <a href="https://github.com/fellobello/fellobello.github.io">GitHub</a>.</div>
+  </footer>
+</body>
+</html>

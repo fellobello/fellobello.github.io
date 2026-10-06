@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home Server · Steven Cochrane</title>
+  <meta name="description" content="A self-hosted home server on an old ThinkPad: Docker, Tailscale, Caddy, systemd.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="name" href="../">Steven Cochrane</a>
+      <nav>
+        <a href="../#projects">Projects</a>
+        <a href="../#skills">Skills</a>
+        <a href="../#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="back"><a href="../#projects">← All projects</a></p>
+    <span class="status">Running since 2024</span>
+    <h1>Self-hosted home server</h1>
+    <p class="meta">An old laptop turned into a headless server for media, file sync and automation, built so it can be rebuilt from scratch.</p>
+
+    <dl class="facts">
+      <dt>When</dt><dd>2024 – present</dd>
+      <dt>Hardware</dt><dd>ThinkPad T470, 7 GB RAM, Ubuntu Server</dd>
+      <dt>Stack</dt><dd>Docker Compose, Caddy, Tailscale, WireGuard, ufw, systemd, Python, Bash</dd>
+    </dl>
+
+    <h2>What it runs</h2>
+    <p>
+      Several Docker containers: media streaming, file sync, a reverse proxy, a VPN and
+      automation. Each service was added one at a time with a pinned version, and the whole
+      setup lives in git, so a clean install plus one checkout brings it back.
+    </p>
+
+    <!-- TODO (Steven): a simple network diagram would fit well here.
+    <figure>
+      <img src="../assets/img/home-server-network.png" alt="...">
+      <figcaption>...</figcaption>
+    </figure>
+    -->
+
+    <h2>A network with two doors</h2>
+    <p>
+      No ports are open on the router. Housemates can reach only the media server on the
+      local network. Admin tools are reachable only over Tailscale, with real HTTPS
+      certificates through Caddy.
+    </p>
+
+    <h2>Problems I ran into</h2>
+    <h3>Docker bypasses the firewall</h3>
+    <p>
+      Docker writes its own firewall rules, so ports it publishes skip <code>ufw</code>
+      entirely. Instead of relying on <code>ufw</code>, I bound each container's port to a
+      specific network interface and then checked every port by connecting from both the
+      local network and the tailnet.
+    </p>
+    <h3>Keeping the download service on the VPN</h3>
+    <p>
+      The download service runs inside the VPN container's network namespace, so its only
+      route out is the tunnel.
+    </p>
+    <h3>Living in 7 GB of RAM</h3>
+    <p>
+      Every container has a memory cap, so nothing can starve media playback.
+    </p>
+
+    <h2>Automation</h2>
+    <ul>
+      <li>A Python script that renames new media and files it into the library.</li>
+      <li>A health-check script and nightly backups, both on systemd timers.</li>
+    </ul>
+
+    <!-- TODO (Steven): optional "What I'd do next" section. -->
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><a href="../">← Back to home</a></div>
+  </footer>
+</body>
+</html>

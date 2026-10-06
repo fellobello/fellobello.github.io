@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DigiClips · Steven Cochrane</title>
+  <meta name="description" content="Capstone Scrum team work on the DigiClips media search platform.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="name" href="../">Steven Cochrane</a>
+      <nav>
+        <a href="../#projects">Projects</a>
+        <a href="../#skills">Skills</a>
+        <a href="../#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="back"><a href="../#projects">← All projects</a></p>
+    <span class="status">2026</span>
+    <h1>DigiClips media search</h1>
+    <p class="meta">University capstone work on a real company's media-monitoring platform.</p>
+
+    <dl class="facts">
+      <dt>When</dt><dd>2026</dd>
+      <dt>Team</dt><dd>Scrum team of ASU capstone students, working for DigiClips Inc.</dd>
+      <dt>Stack</dt><dd>REST API, MySQL, automated tests</dd>
+      <dt>Product</dt><dd><a href="https://digiclipsproject.com">digiclipsproject.com</a></dd>
+    </dl>
+
+    <h2>The product</h2>
+    <p>
+      DigiClips lets journalists and media companies search recorded TV, radio and print
+      coverage by keyword. It's built and maintained by successive university capstone teams.
+    </p>
+
+    <h2>What I fixed</h2>
+    <h3>Searches surviving logout</h3>
+    <p>
+      A user's searches stayed in the browser after logout and showed up for the next person
+      on the same computer. I made logout clear the app's stored search data and saved presets.
+    </p>
+    <h3>Searches returning too few results</h3>
+    <p>
+      When filters removed rows after the database limit was applied, users got fewer results
+      than they asked for. I changed the search API to fetch more rows when filters used up
+      the limit, and added 13 automated tests around it.
+    </p>
+
+    <!-- TODO (Steven): anything about the Scrum process, your role, or what you learned
+         working in an existing codebase. Check what DigiClips allows you to share publicly. -->
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><a href="../">← Back to home</a></div>
+  </footer>
+</body>
+</html>
