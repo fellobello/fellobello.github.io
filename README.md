@@ -22,3 +22,9 @@ assets/img/             screenshots and diagrams
 ## Preview locally
 
 Open `index.html` in a browser, or run `python3 -m http.server` here and visit http://localhost:8000.
+
+## Drafts
+
+`_drafts/` holds pages that aren't ready to show (GitHub Pages doesn't publish folders that
+start with an underscore). To publish one, move it into `projects/` and add its card to
+`index.html`.
