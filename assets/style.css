@@ -106,6 +106,14 @@ main { padding: 2.5rem 0 0; }
 .card h3 a:hover { color: var(--accent); }
 .card p { color: var(--muted); font-size: .95rem; }
 .card .more { margin-top: auto; font-size: .95rem; }
+.card .thumb { display: block; margin: .25rem 0 .75rem; }
+.card .thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) - 4px);
+}
 
 .tags { display: flex; flex-wrap: wrap; gap: .35rem; padding: 0; margin: 0 0 .75rem; list-style: none; }
 .tags li {

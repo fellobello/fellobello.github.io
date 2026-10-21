@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wikigraph · Steven Cochrane</title>
+  <meta name="description" content="Wikigraph: build a prerequisite knowledge graph for any topic from Wikipedia and explore it in 2D or 3D.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="name" href="../">Steven Cochrane</a>
+      <nav>
+        <a href="../#projects">Projects</a>
+        <a href="../#skills">Skills</a>
+        <a href="../#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="back"><a href="../#projects">← All projects</a></p>
+    <span class="status">Live</span>
+    <h1>Wikigraph</h1>
+    <p class="meta">Builds a prerequisite knowledge graph for any topic from Wikipedia, then lets you explore it in 2D or 3D with the foundations at the bottom.</p>
+
+    <dl class="facts">
+      <dt>When</dt><dd>2026</dd>
+      <dt>Stack</dt><dd>Python 3.9+ (standard library only) for the builder; one self-contained HTML page with three.js for the explorer</dd>
+      <dt>Try it</dt><dd><a href="https://fellobello.github.io/wikigraph/">fellobello.github.io/wikigraph</a></dd>
+      <dt>Code</dt><dd><a href="https://github.com/fellobello/wikigraph">github.com/fellobello/wikigraph</a></dd>
+    </dl>
+
+    <figure>
+      <img src="../assets/img/wikigraph.png" alt="Wikigraph 3D view of a 2,081-concept machine-learning graph arranged in 37 levels, with the overview panel listing the foundations and concepts per level" loading="lazy">
+      <figcaption>The 3D explorer on the machine-learning demo graph: 2,081 concepts in 37 levels, sized by betweenness and coloured by category.</figcaption>
+    </figure>
+
+    <h2>Why I built it</h2>
+    <p>
+      The Palindrome's "Map of Machine Learning"
+      (<a href="https://thepalindrome.org/p/i-built-the-knowledge-graph-of-machine">video and post</a>,
+      <a href="https://github.com/the-palindrome/ml-knowledge-graph">code</a>) lays machine learning out
+      as layers of prerequisites. I wanted the same kind of map for any topic, built automatically
+      from Wikipedia instead of by hand.
+    </p>
+
+    <h2>What it does</h2>
+    <ul>
+      <li><strong>Builder:</strong> <code>python3 wikigraph.py build "Linear algebra" -o linalg.json</code> crawls Wikipedia and writes a graph file.</li>
+      <li><strong>Layered 2D and 3D views:</strong> each concept sits at its level, the length of its longest prerequisite chain.</li>
+      <li><strong>Tracing:</strong> highlight a concept's prerequisites or dependents, or get a learning path to it.</li>
+      <li><strong>Pillars ranking:</strong> the concepts with the highest betweenness centrality, which the most other ideas route through.</li>
+      <li><strong>Human review:</strong> a Review tab writes a <code>curation.json</code> that the next rebuild applies.</li>
+    </ul>
+
+    <h2>Interesting parts</h2>
+    <h3>Keeping the crawl finite</h3>
+    <p>
+      Following every link on Wikipedia never ends. The builder follows only the links in each
+      article's definition, the first lead paragraph outside parentheses. Those links point at
+      more basic ideas, so the crawl narrows toward foundations instead of spreading sideways.
+      Filters drop people, places, fields of study and lists. A best-first node budget expands
+      the most-cited concepts first, and "bedrock" concepts such as set and equality are never
+      expanded.
+    </p>
+    <h3>Turning a link graph into layers</h3>
+    <p>
+      Raw Wikipedia links contain cycles and many redundant edges. The builder breaks each
+      cycle by keeping edges from the more widely cited concept, then applies transitive
+      reduction: it drops A→C whenever A→B→C exists. Then it computes each node's level,
+      betweenness centrality and PageRank. Offline tests run the whole pipeline against a fake
+      Wikipedia.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><a href="../">← Back to home</a></div>
+  </footer>
+</body>
+</html>
