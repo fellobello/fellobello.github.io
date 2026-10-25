@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roughcut · Steven Cochrane</title>
+  <meta name="description" content="Roughcut: a Claude Code plugin that turns a software idea into a working sample, one round at a time.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="name" href="../">Steven Cochrane</a>
+      <nav>
+        <a href="../#projects">Projects</a>
+        <a href="../#skills">Skills</a>
+        <a href="../#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="back"><a href="../#projects">← All projects</a></p>
+    <span class="status wip">Early</span>
+    <h1>Roughcut</h1>
+    <p class="meta">A Claude Code plugin that turns a software idea into a working sample, a round at a time: agents plan it, build the pieces in parallel, merge and test them, then ask you a short list of questions.</p>
+
+    <dl class="facts">
+      <dt>When</dt><dd>2026</dd>
+      <dt>Status</dt><dd>Early. It has run one full round on a real idea.</dd>
+      <dt>Stack</dt><dd>Python 3.9+, Claude Code plugins and dynamic workflows, git worktrees</dd>
+      <dt>Code</dt><dd><a href="https://github.com/fellobello/roughcut">github.com/fellobello/roughcut</a></dd>
+    </dl>
+
+    <h2>Why I built it</h2>
+    <p>
+      I wanted to go from a notebook-style idea to something I could click through without
+      writing a full spec first. Roughcut builds a rough first version, then asks me what it
+      guessed wrong, so each round gets closer to what I actually meant.
+    </p>
+
+    <h2>What it does</h2>
+    <ul>
+      <li>Takes an idea in a sentence or two and plans it as modules with written interfaces.</li>
+      <li>Builds the modules in parallel, each task in its own git worktree, then merges and runs every test.</li>
+      <li>Stops with a short list of questions. Your answers decide what the next round builds, and changing an answer rebuilds only what depends on it.</li>
+    </ul>
+
+    <h2>Interesting parts</h2>
+    <h3>Interfaces first, tests from the spec</h3>
+    <p>
+      The planner writes the interfaces as real code before any builder starts, so modules
+      can be built at the same time without guessing about each other. Each module's tests
+      are written by a separate agent that never reads that module's implementation, so the
+      tests check the spec and not the code.
+    </p>
+
+    <h3>One writer for shared state</h3>
+    <p>
+      Agents don't talk to each other directly. They communicate through files in a
+      <code>.hub/</code> folder that only one script writes, and it locks every change.
+    </p>
+
+    <h2>Example</h2>
+    <p>
+      From the one-line idea "google maps but you can see flock cameras and plan routes
+      around them," the first round planned six modules, built them with acceptance tests in
+      parallel and merged them into a working web app with 591 passing tests. It then handed
+      back 11 big guesses to confirm. The result is
+      <a href="https://github.com/fellobello/alpr-route-planner">alpr-route-planner</a>.
+      Agents wrote all of that code; the plan and every decision are in its <code>.hub/</code> folder.
+    </p>
+
+    <h2>What I'd do next</h2>
+    <p>Run more rounds on different ideas and see where the questions stop being useful.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><a href="../">← Back to home</a></div>
+  </footer>
+</body>
+</html>
