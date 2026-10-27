@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ALPR Route Planner · Steven Cochrane</title>
+  <meta name="description" content="ALPR Route Planner: a map of license plate reader cameras from OpenStreetMap, with driving routes that avoid them.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="name" href="../">Steven Cochrane</a>
+      <nav>
+        <a href="../#projects">Projects</a>
+        <a href="../#skills">Skills</a>
+        <a href="../#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="back"><a href="../#projects">← All projects</a></p>
+    <span class="status wip">Sample build</span>
+    <h1>ALPR Route Planner</h1>
+    <p class="meta">A map of automated license plate reader (ALPR) cameras, including Flock Safety cameras, that plans a driving route around them next to the normal fastest route.</p>
+
+    <dl class="facts">
+      <dt>When</dt><dd>2026</dd>
+      <dt>Status</dt><dd>Sample build. Working code with placeholder visuals. Run it locally with <code>npm start</code> or offline with <code>npm run offline</code>.</dd>
+      <dt>Stack</dt><dd>Node.js 22+, plain JavaScript with no npm dependencies, Leaflet, OpenStreetMap, Valhalla routing</dd>
+      <dt>Code</dt><dd><a href="https://github.com/fellobello/alpr-route-planner">github.com/fellobello/alpr-route-planner</a></dd>
+    </dl>
+
+    <h2>Why I built it</h2>
+    <p>
+      The starting idea was one line: a map app that shows Flock cameras and plans routes around
+      them. I gave that to Roughcut and it built a working version.
+    </p>
+
+    <h2>What it does</h2>
+    <ul>
+      <li>Shows ALPR cameras from OpenStreetMap on a Leaflet map.</li>
+      <li>Click the map once for the start and again for the end. It draws the fastest route and a route that avoids the mapped cameras.</li>
+      <li>Runs offline with made-up sample cameras and a straight-line stub router, so it can be tried without a network.</li>
+    </ul>
+
+    <h2>Interesting parts</h2>
+    <h3>Tests that never touch the network</h3>
+    <p>
+      Outside services are faked through injected <code>fetch</code>, so the test suite runs
+      without reaching OpenStreetMap or the routing server. The acceptance tests were written
+      from the spec, not from the code.
+    </p>
+
+    <h3>Honest about its limits</h3>
+    <p>
+      Camera coverage comes from crowd-sourced OpenStreetMap data and is incomplete. A route that
+      avoids every mapped camera can still pass unmapped ones, and the app says so.
+    </p>
+
+    <h2>Example</h2>
+    <p>
+      This is the first real build from <a href="roughcut.html">Roughcut</a>, from the
+      one-line idea "google maps but you can see flock cameras and plan routes around them." The
+      plan, tasks and every decision are kept in the repo's <code>.hub/</code> folder, and the
+      open questions are in <code>QUESTIONS.md</code>.
+    </p>
+
+    <h2>What I'd do next</h2>
+    <p>
+      The license and several other big decisions are still open. They are listed in
+      <code>QUESTIONS.md</code> in the repo.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><a href="../">← Back to home</a></div>
+  </footer>
+</body>
+</html>
