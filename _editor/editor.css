@@ -1,0 +1,7 @@
+/* Page-side styles while the editor is loaded. Never saved: the link is stripped on save. */
+body[contenteditable="true"] { outline: none; }
+body[contenteditable="true"] :is(p, li, h1, h2, h3, h4, dd, dt, figcaption, a, span):hover {
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.35);
+  border-radius: 2px;
+}
+body { padding-bottom: 80px; }

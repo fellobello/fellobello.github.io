@@ -23,6 +23,20 @@ assets/img/             screenshots and diagrams
 
 Open `index.html` in a browser, or run `python3 -m http.server` here and visit http://localhost:8000.
 
+## Editing in the browser
+
+Double-click `_editor/Edit site.command` in Finder (or run `node _editor/server.js`). The site
+opens at http://localhost:4000 with a toolbar at the bottom of every page:
+
+- **Edit text**: click any text and type. Click a link or image to change its address. The blue
+  tag on the selected block moves, duplicates (e.g. a project card) or deletes it.
+- **CSS**: the page title, description and `assets/style.css`, applied as you type.
+- **Save** (or Cmd+S) writes to the real files; an unedited page saves back unchanged, so
+  `git diff` shows only what you changed.
+
+Links work normally while Edit text is off. Close the Terminal window to stop. `_editor/` isn't
+published.
+
 ## Drafts
 
 `_drafts/` holds pages that aren't ready to show (GitHub Pages doesn't publish folders that
