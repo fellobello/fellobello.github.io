@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ALPR Route Planner · Steven Cochrane</title>
-  <meta name="description" content="ALPR Route Planner: a map of license plate reader cameras from OpenStreetMap, with driving routes that avoid them.">
+  <meta name="description" content="ALPR Route Planner: a web and Android map of license plate reader cameras, with driving routes that avoid them.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
@@ -24,56 +24,55 @@
 
   <main class="wrap">
     <p class="back"><a href="../#projects">← All projects</a></p>
-    <span class="status wip">Sample build</span>
+    <span class="status">v1.0</span>
     <h1>ALPR Route Planner</h1>
-    <p class="meta">A map of automated license plate reader (ALPR) cameras, including Flock Safety cameras, that plans a driving route around them next to the normal fastest route.</p>
+    <p class="meta">A map of license plate reader cameras, including Flock Safety cameras, that plans a driving route around them and compares it with the fastest route. Runs on the web and as an Android app.</p>
+
+    <figure class="shots">
+      <img src="../assets/img/alpr-desktop.jpg" alt="Desktop app: the camera-avoiding route and the fastest route across San Luis Obispo, with mapped cameras and a comparison panel" loading="lazy">
+      <img src="../assets/img/alpr-phone.jpg" alt="Phone layout: the same trip with the route comparison in a bottom sheet" loading="lazy">
+      <figcaption>Cal Poly to Madonna Inn: the fastest route passes 4 mapped cameras; the avoiding route passes 2 for 14 more minutes.</figcaption>
+    </figure>
 
     <dl class="facts">
       <dt>When</dt><dd>2026</dd>
-      <dt>Status</dt><dd>Sample build. Working code with placeholder visuals. Run it locally with <code>npm start</code> or offline with <code>npm run offline</code>.</dd>
-      <dt>Stack</dt><dd>Node.js 22+, plain JavaScript with no npm dependencies, Leaflet, OpenStreetMap, Valhalla routing</dd>
+      <dt>Stack</dt><dd>Node.js 22, plain JavaScript with no npm dependencies, Leaflet, OpenStreetMap (Overpass, Nominatim), Valhalla routing, Capacitor for Android</dd>
       <dt>Code</dt><dd><a href="https://github.com/fellobello/alpr-route-planner">github.com/fellobello/alpr-route-planner</a></dd>
     </dl>
 
-    <h2>Why I built it</h2>
-    <p>
-      The starting idea was one line: a map app that shows Flock cameras and plans routes around
-      them. I gave that to Roughcut and it built a working version.
-    </p>
-
     <h2>What it does</h2>
     <ul>
-      <li>Shows ALPR cameras from OpenStreetMap on a Leaflet map.</li>
-      <li>Click the map once for the start and again for the end. It draws the fastest route and a route that avoids the mapped cameras.</li>
-      <li>Runs offline with made-up sample cameras and a straight-line stub router, so it can be tried without a network.</li>
+      <li>Shows ALPR cameras mapped in OpenStreetMap.</li>
+      <li>Search for a start and destination, click the map, or use your location.</li>
+      <li>Plans the fastest route and one that steers around cameras, with the camera count and extra time for each. You choose how close counts as passing a camera.</li>
     </ul>
 
     <h2>Interesting parts</h2>
-    <h3>Tests that never touch the network</h3>
+    <h3>Works when the data service doesn't</h3>
     <p>
-      Outside services are faked through injected <code>fetch</code>, so the test suite runs
-      without reaching OpenStreetMap or the routing server. The acceptance tests were written
-      from the spec, not from the code.
+      The public camera service (Overpass) is often slow or down. Camera data is cached by map
+      tile and saved to disk, so areas seen before load instantly. Out-of-date tiles are still
+      shown while a refresh runs in the background, and backup mirrors are tried in turn.
+    </p>
+
+    <h3>One codebase, web and Android</h3>
+    <p>
+      The API logic has no HTTP in it, so the same code runs in the Node server and inside the
+      Android app. The phone app plans routes on the device and needs no server.
     </p>
 
     <h3>Honest about its limits</h3>
     <p>
-      Camera coverage comes from crowd-sourced OpenStreetMap data and is incomplete. A route that
-      avoids every mapped camera can still pass unmapped ones, and the app says so.
+      Camera locations are crowd-sourced and incomplete. A route that avoids every mapped camera
+      can still pass unmapped ones, and the app says so.
     </p>
 
-    <h2>Example</h2>
+    <h2>How it was built</h2>
     <p>
-      This is the first real build from <a href="roughcut.html">Roughcut</a>, from the
-      one-line idea "google maps but you can see flock cameras and plan routes around them." The
-      plan, tasks and every decision are kept in the repo's <code>.hub/</code> folder, and the
-      open questions are in <code>QUESTIONS.md</code>.
-    </p>
-
-    <h2>What I'd do next</h2>
-    <p>
-      The license and several other big decisions are still open. They are listed in
-      <code>QUESTIONS.md</code> in the repo.
+      <a href="roughcut.html">Roughcut</a> built the first version from one line: "google maps
+      but you can see flock cameras and plan routes around them." I then took it to a 1.0 release:
+      the redesign, place search, offline-tolerant camera data and the Android app. The code is
+      AI-written from my direction, with 612 tests that never touch the network.
     </p>
   </main>
 

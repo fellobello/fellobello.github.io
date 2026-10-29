@@ -183,3 +183,9 @@ figcaption { color: var(--muted); font-size: .9rem; margin-top: .4rem; }
   padding: .75rem 1rem;
   font-size: .95rem;
 }
+
+/* Desktop and phone screenshots side by side */
+.shots { display: grid; grid-template-columns: 3fr 1fr; gap: .75rem; align-items: start; }
+.shots img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius); }
+.shots figcaption { grid-column: 1 / -1; }
+@media (max-width: 560px) { .shots { grid-template-columns: 1fr; } }
