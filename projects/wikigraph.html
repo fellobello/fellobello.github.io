@@ -37,25 +37,20 @@
 
     <figure>
       <img src="../assets/img/wikigraph.png" alt="Wikigraph's 3D explorer showing The Palindrome's machine-learning graph in levels, with the overview panel listing the foundations and concepts per level" loading="lazy">
-      <figcaption>The 3D explorer on the demo graph, The Palindrome's map of machine learning (2,081 concepts in 37 levels), sized by betweenness and coloured by category. Wikigraph's own build from &ldquo;Machine learning&rdquo; has 413 concepts in 19 levels.</figcaption>
+      <figcaption>The 3D explorer on the demo graph.</figcaption>
     </figure>
 
     <h2>Why I built it</h2>
-    <p>
-      The Palindrome's "Map of Machine Learning"
-      (<a href="https://thepalindrome.org/p/i-built-the-knowledge-graph-of-machine">video and post</a>,
-      <a href="https://github.com/the-palindrome/ml-knowledge-graph">code</a>) lays machine learning out
-      as layers of prerequisites. I wanted the same kind of map for any topic, built automatically
+    <p>In school I have found myself needing to do a lot of the learning independently. For some more advanced topics I often would start at wikipedia to get an understanding what to learn. I wanted a map for any topic to guide my learning, built automatically
       from Wikipedia instead of by hand.
     </p>
 
     <h2>What it does</h2>
     <ul>
       <li><strong>Builder:</strong> <code>python3 wikigraph.py build "Linear algebra" -o linalg.json</code> crawls Wikipedia and writes a graph file.</li>
-      <li><strong>Layered 2D and 3D views:</strong> each concept sits at its level, the length of its longest prerequisite chain.</li>
-      <li><strong>Tracing:</strong> highlight a concept's prerequisites or dependents, or get a learning path to it.</li>
+      <li><strong>Layered 2D and 3D views:</strong> each concept sits at a level based on its prerequisite knowledge.</li>
+      <li><strong>Tracing:</strong> highlight a concept's prerequisites to get a learning path to it.</li>
       <li><strong>Pillars ranking:</strong> the concepts with the highest betweenness centrality, which the most other ideas route through.</li>
-      <li><strong>Human review:</strong> a Review tab writes a <code>curation.json</code> that the next rebuild applies.</li>
     </ul>
 
     <h2>Interesting parts</h2>
@@ -74,7 +69,7 @@
       cycle by keeping edges from the more widely cited concept, then applies transitive
       reduction: it drops A→C whenever A→B→C exists. Then it computes each node's level,
       betweenness centrality and PageRank. Offline tests run the whole pipeline against a fake
-      Wikipedia.
+      Wikipedia built by Claude.
     </p>
   </main>
 

@@ -30,8 +30,7 @@
 
     <dl class="facts">
       <dt>When</dt><dd>2026</dd>
-      <dt>Stack</dt><dd>HTML, CSS, JavaScript (no frameworks or dependencies), Python 3 for the local server</dd>
-      <dt>How</dt><dd>Built with Claude Code: I wrote the spec, reviewed the code and tested every feature</dd>
+      <dt>Stack</dt><dd>HTML, CSS, JavaScript, Python 3</dd>
       <dt>Try it</dt><dd><a href="https://fellobello.github.io/flashcard-study-app/">fellobello.github.io/flashcard-study-app</a></dd>
       <dt>Code</dt><dd><a href="https://github.com/fellobello/flashcard-study-app">github.com/fellobello/flashcard-study-app</a> (MIT license)</dd>
     </dl>
@@ -43,9 +42,7 @@
 
     <h2>Why I built it</h2>
     <p>
-      I needed to study a 242-card deck for my CSE 445 (distributed software development)
-      midterm and wanted cards I could edit in a spreadsheet, with no account. Everything runs
-      from one folder, works offline and opens by double-clicking.
+      I needed to study a 242-card deck for my distributed software development midterm and wanted cards I could edit in a spreadsheet or with an LLM. Everything runs offline.
     </p>
 
     <h2>What it does</h2>
@@ -54,7 +51,7 @@
       <li><strong>Three difficulty levels</strong> that change time limits, answer choices, lives and scoring.</li>
       <li><strong>CSV decks:</strong> each card has a section, tags, a term, a definition and an optional example.</li>
       <li><strong>Progress tracking:</strong> got-it and study-again marks, starred cards and best scores.</li>
-      <li><strong>Pomodoro focus timer</strong> that keeps running between games, and export to Quizlet or Anki.</li>
+      <li><strong>Pomodoro focus timer</strong> that keeps running between games.</li>
     </ul>
 
     <h2>Interesting parts</h2>
@@ -68,12 +65,8 @@
     </p>
     <h3>Saving progress without a backend</h3>
     <p>
-      Opened straight from disk, the app saves progress in the browser. Run through the
-      small Python server instead (it only listens on <code>127.0.0.1</code>), and progress
-      is written to a <code>progress.json</code> file next to the deck, so it survives clearing
-      the browser and can be copied between machines. The server also regenerates a built-in
-      copy of the deck whenever <code>cards.csv</code> changes, so the app still works when
-      opened as a plain file.
+      Opened straight from disk, the app saves progress in the browser. After running a small Python script,&nbsp;<code>progress.json</code>&nbsp;is saved next to the deck, so it survives clearing
+      the browser and can be copied between machines.
     </p>
 
     <!-- Optional next sections:

@@ -26,11 +26,11 @@
     <p class="back"><a href="../#projects">← All projects</a></p>
     <span class="status wip">Early</span>
     <h1>Roughcut</h1>
-    <p class="meta">A Claude Code plugin that turns a software idea into a working sample, a round at a time: agents plan it, build the pieces in parallel, merge and test them, then ask you a short list of questions.</p>
+    <p class="meta">A multi agent LLM harness that turns a software idea into a working sample or allows you to edit an existing app, one round at a time: agents plan it, build the pieces in parallel, merge and test them, while asking you enough questions to avoid making any assumptions.</p>
 
     <dl class="facts">
       <dt>When</dt><dd>2026</dd>
-      <dt>Status</dt><dd>Early. It has run one full round on a real idea.</dd>
+      <dt>Status</dt><dd>Early.</dd>
       <dt>Stack</dt><dd>Python 3.9+, Claude Code plugins and dynamic workflows, git worktrees</dd>
       <dt>Code</dt><dd><a href="https://github.com/fellobello/roughcut">github.com/fellobello/roughcut</a></dd>
     </dl>
@@ -38,15 +38,15 @@
     <h2>Why I built it</h2>
     <p>
       I wanted to go from a notebook-style idea to something I could click through without
-      writing a full spec first. Roughcut builds a rough first version, then asks me what it
-      guessed wrong, so each round gets closer to what I actually meant.
+      writing a full spec first. Roughcut builds a rough first version with me, then asks what it
+      got wrong, so we incrementally get closer to our vision.
     </p>
 
     <h2>What it does</h2>
     <ul>
       <li>Takes an idea in a sentence or two and plans it as modules with written interfaces.</li>
-      <li>Builds the modules in parallel, each task in its own git worktree, then merges and runs every test.</li>
-      <li>Stops with a short list of questions. Your answers decide what the next round builds, and changing an answer rebuilds only what depends on it.</li>
+      <li>Builds the modules in parallel, each task in its own git worktree, then merges and runs every test.</li><li>Recursively breaks down problems into modules which can be solved by smaller models or quickly fixed by a user.</li>
+      <li>Stops with a short list of questions. Your answers decide what the next round builds, and changing an answer rebuilds only what depends on it.</li><li>There is a built in text editor and some quality of life features to make basic IDE functionalities possible.</li><li>A decision model keeps our token usage lower while problem solving.</li><li>Also works as a plugin for Claude Code</li>
     </ul>
 
     <h2>Interesting parts</h2>
@@ -54,9 +54,7 @@
     <p>
       The planner writes the interfaces as real code before any builder starts, so modules
       can be built at the same time without guessing about each other. Each module's tests
-      are written by a separate agent that never reads that module's implementation, so the
-      tests check the spec and not the code.
-    </p>
+      are written by a separate agent that never reads that module's implementation.</p>
 
     <h3>One writer for shared state</h3>
     <p>
@@ -68,14 +66,14 @@
     <p>
       From the one-line idea "google maps but you can see flock cameras and plan routes
       around them," the first round planned six modules, built them with acceptance tests in
-      parallel and merged them into a working web app with 591 passing tests. It then handed
-      back 11 big guesses to confirm. The result is
+      parallel and merged them into a working web app with about 600 tests total. It then handed
+      back 11 questions throughout the process. The result is
       <a href="https://github.com/fellobello/alpr-route-planner">alpr-route-planner</a>.
       Agents wrote all of that code; the plan and every decision are in its <code>.hub/</code> folder.
     </p>
 
     <h2>What I'd do next</h2>
-    <p>Run more rounds on different ideas and see where the questions stop being useful.</p>
+    <p>I want to integrate more quality of life features so I can do all my development here. For example I want to integrate a simple UI to use git commands.</p>
   </main>
 
   <footer class="site-footer">
